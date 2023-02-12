@@ -2,7 +2,6 @@ from game.game_engine import GameEngine
 
 
 def main():
-    
     GameEngine.run_game()
 
 
