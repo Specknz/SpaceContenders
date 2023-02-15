@@ -1,25 +1,32 @@
 import pygame
-from game_parameters import GameParameters
 from ship import Ship
-from .game import ship_logic
+import ship_logic
 
-def check_events(pyg: pygame, ships: list[Ship]) -> None:
+
+def check_events(pyg: pygame, ships: list[Ship]) -> bool:
     
     for event in pyg.event.get():
-
-            # Check if player has quit
-            if check_for_quit(pyg, event):
-                break
-
-            # Check if ship has shot
-            if event.type == pyg.KEYDOWN:
-                if event.key == pyg.K_LCTRL or event.key == pyg.K_RCTRL:
-                    ship_logic.shoot_ships(ships=ships, key_pressed=event.key)
+        
+            if check_player_quit(pyg, event): return False
+            
+            check_ship_shot(event, pyg, ships)
+    
+    return True
                     
                     
-def check_for_quit(pyg, event):
+def check_player_quit(pyg, event):
     if event.type == pyg.QUIT:
-        GameParameters.game_running = False
         return True 
     
-    
+
+def check_ship_shot(event, pyg, ships):
+    if keydown_pressed(event, pyg) and shoot_pressed(event, pyg):
+        ship_logic.shoot_ships(ships=ships, key_pressed=event.key)
+        
+
+def keydown_pressed(event, pyg):
+    return event.type == pyg.KEYDOWN
+
+        
+def shoot_pressed(event, pyg):
+    return event.key == pyg.K_LCTRL or event.key == pyg.K_RCTRL
