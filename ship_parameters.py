@@ -1,5 +1,5 @@
 import pygame
-from ui.ui_parameters import UIParameters
+from ui_parameters import UIParameters
 
 class ShipParameters:
     

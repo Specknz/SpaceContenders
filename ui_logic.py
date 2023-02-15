@@ -1,6 +1,6 @@
 import pygame
-from ui.ui_parameters import UIParameters
-from ship.ship import Ship
+from ui_parameters import UIParameters
+from ship import Ship
 
 
 def draw_window(ships: list[Ship], pyg: pygame) -> None:

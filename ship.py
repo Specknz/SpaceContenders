@@ -1,7 +1,7 @@
 import os
 import pygame
-from ui.ui_parameters import UIParameters
-from ship.ship_parameters import ShipParameters
+from ui_parameters import UIParameters
+from ship_parameters import ShipParameters
 
 
 class Ship:

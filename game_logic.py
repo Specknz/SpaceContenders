@@ -1,4 +1,4 @@
-from ship.ship import Ship
+from ship import Ship
 
 
 def create_ships() -> list[Ship]:

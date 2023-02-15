@@ -1,7 +1,7 @@
 import pygame
-from ship.ship import Ship
-from ship.ship_parameters import ShipParameters
-from ui.ui_parameters import UIParameters
+from ship import Ship
+from ship_parameters import ShipParameters
+from ui_parameters import UIParameters
 
 
 def move_ships(ships: list[Ship], keys_pressed) -> None:

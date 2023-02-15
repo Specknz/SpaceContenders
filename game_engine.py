@@ -1,9 +1,9 @@
 import pygame
-from game.game_parameters import GameParameters
-from game import game_event_handler
-from game import game_logic
-from ui import ui_logic
-from ship import ship_logic
+from game_parameters import GameParameters
+from . import game_event_handler
+from . import game_logic
+from . import ui_logic
+from .game import ship_logic
 
 
 class GameEngine():
