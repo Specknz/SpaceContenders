@@ -1,5 +1,5 @@
 import pygame
-import game_event_handler
+import event_handler
 import ui_logic
 import ship_logic
 from settings_manager import SettingsManager
@@ -19,7 +19,7 @@ def main():
     
 
     
-    while game_event_handler.check_events(pyg=pyg, ships=ships_store.ships):
+    while event_handler.check_events(pyg=pyg, ships=ships_store.ships):
         
         clock.tick(settings.settings["FPS"])
 
@@ -29,7 +29,7 @@ def main():
 
         ui_logic.draw_window(ships=ships_store.ships, pyg=pyg)
     
-    pyg.quit()
+    
 
 
 if __name__ == "__main__":

@@ -3,20 +3,18 @@ from ship import Ship
 import ship_logic
 
 
-def check_events(pyg: pygame, ships: list[Ship]) -> bool:
+def check_events(pyg: pygame, ships: list[Ship]) -> None:
     
     for event in pyg.event.get():
         
-            if check_player_quit(pyg, event): return False
+            check_player_quit(pyg, event)
             
             check_ship_shot(event, pyg, ships)
-    
-    return True
                     
                     
 def check_player_quit(pyg, event):
     if event.type == pyg.QUIT:
-        return True 
+        pyg.quit()
     
 
 def check_ship_shot(event, pyg, ships):
