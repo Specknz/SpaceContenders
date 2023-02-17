@@ -1,4 +1,4 @@
-from ship_factory import ShipFactory
+from Factories.ship_factory import ShipFactory
 
 class ShipsStore:
     def __init__(self):
