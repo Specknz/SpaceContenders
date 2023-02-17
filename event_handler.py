@@ -1,30 +1,35 @@
 import pygame
-from ship import Ship
 import ship_logic
+from Stores.ships_store import ShipsStore
 
 
-def check_events(pyg: pygame, ships: list[Ship]) -> None:
+class EventHandler:
     
-    for event in pyg.event.get():
+    def __init__(self, pyg: pygame, ships_store: ShipsStore):
+        self._pyg: pygame = pyg
+        self._ships_store: ShipsStore = ships_store
+
+
+    def check_events(self) -> None:
+        for event in self._pyg.event.get():
+                self._check_player_quit(event)
+                self._check_ship_shot(event)
+                        
+                        
+    def _check_player_quit(self, event) -> None:
+        if event.type == self._pyg.QUIT:
+            self._pyg.quit()
         
-            check_player_quit(pyg, event)
+
+    def _check_ship_shot(self, event) -> None:
+        if self._keydown_pressed(event):
+            if self._shoot_pressed(event):
+                ship_logic.shoot_ships(self._ships_store.ships, event.key)
             
-            check_ship_shot(event, pyg, ships)
-                    
-                    
-def check_player_quit(pyg, event):
-    if event.type == pyg.QUIT:
-        pyg.quit()
-    
 
-def check_ship_shot(event, pyg, ships):
-    if keydown_pressed(event, pyg) and shoot_pressed(event, pyg):
-        ship_logic.shoot_ships(ships=ships, key_pressed=event.key)
-        
+    def _keydown_pressed(self, event) -> bool:
+        return event.type == self._pyg.KEYDOWN
 
-def keydown_pressed(event, pyg):
-    return event.type == pyg.KEYDOWN
-
-        
-def shoot_pressed(event, pyg):
-    return event.key == pyg.K_LCTRL or event.key == pyg.K_RCTRL
+            
+    def _shoot_pressed(self, event) -> bool:
+        return event.key == self._pyg.K_LCTRL or event.key == self._pyg.K_RCTRL

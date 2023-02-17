@@ -1,9 +1,9 @@
 import pygame
-import event_handler
-import ui_logic
+from Models.ui import UI
 import ship_logic
+from event_handler import EventHandler
 from Settings.settings_manager import SettingsManager
-from ships_store import ShipsStore
+from Stores.ships_store import ShipsStore
 
 
 def main():
@@ -12,21 +12,25 @@ def main():
     
     settings = SettingsManager()
     ships_store = ShipsStore()
+    even_handler = EventHandler(pyg, ships_store)
+    ui = UI(pyg, ships_store.ships)
     
     clock = pyg.time.Clock()
     
     game_running = True
 
     while game_running:
-        event_handler.check_events(pyg=pyg, ships=ships_store.ships)
-
+        
+        ui.draw_window()
+        
         clock.tick(settings.fps)
+        
+        even_handler.check_events()
 
         ship_logic.move_bullets(ships=ships_store.ships)
         
         ship_logic.move_ships(ships=ships_store.ships, keys_pressed=pyg.key.get_pressed())
 
-        ui_logic.draw_window(ships=ships_store.ships, pyg=pyg)
 
 
 if __name__ == "__main__":

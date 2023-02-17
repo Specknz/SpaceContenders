@@ -1,4 +1,4 @@
-from ship import Ship
+from Models.ship import Ship
 
 class ShipFactory:
     
