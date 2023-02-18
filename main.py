@@ -9,13 +9,12 @@ from Stores.ships_store import ShipsStore
 def main():
     pyg = pygame
     pyg.display.set_caption("Space Contenders")
+    clock = pyg.time.Clock()
     
     settings = SettingsManager()
     ships_store = ShipsStore()
-    even_handler = EventHandler(pyg, ships_store)
+    event_handler = EventHandler(pyg, ships_store)
     ui = UI(pyg, ships_store.ships)
-    
-    clock = pyg.time.Clock()
     
     game_running = True
 
@@ -25,7 +24,7 @@ def main():
         
         clock.tick(settings.fps)
         
-        even_handler.check_events()
+        event_handler.check_events()
 
         ship_logic.move_bullets(ships=ships_store.ships)
         
