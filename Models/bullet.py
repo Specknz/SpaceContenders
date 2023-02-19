@@ -1,14 +1,11 @@
-from Models.ship import Ship
+import pygame
 
 
 class Bullet:
     
-    BULLET_HEIGHT = 4
-    BULLET_WIDTH = 10
-
-    BULLET_MAX_AMOUNT = 6
+    HEIGHT = 4
+    WIDTH = 10
+    SPEED = 7
     
-    BULLET_SPEED = Ship.MOVE_SPEED + 2
-    
-    def __init__(self) -> None:
-        pass
+    def __init__(self, x_spawn_loc, y_spawn_loc) -> None:
+        self.rect = pygame.Rect(x_spawn_loc, y_spawn_loc, self.WIDTH, self.HEIGHT)

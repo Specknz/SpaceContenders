@@ -1,35 +1,45 @@
 import pygame
-import ship_logic
-from Stores.ships_store import ShipsStore
+from Models.ship import Ship
 
 
 class EventHandler:
+    def __init__(self, pyg: pygame, ships: list[Ship]):
+        self.__pyg: pygame = pyg
+        self.__ships: list[Ship] = ships
+
+
+    def handle_events(self) -> None:
+        for event in self.__pyg.event.get():
+                self.__handle_quit(event)
+                self.__handle_key_presses(event)
+                        
+                        
+    def __handle_quit(self, event) -> None:
+        if event.type == self.__pyg.QUIT:
+            self.__pyg.quit()
     
-    def __init__(self, pyg: pygame, ships_store: ShipsStore):
-        self._pyg: pygame = pyg
-        self._ships_store: ShipsStore = ships_store
+    
+    def __key_pressed(self, event_type) -> bool:
+        return event_type == self.__pyg.KEYDOWN    
 
 
-    def check_events(self) -> None:
-        for event in self._pyg.event.get():
-                self._check_player_quit(event)
-                self._check_ship_shot(event)
-                        
-                        
-    def _check_player_quit(self, event) -> None:
-        if event.type == self._pyg.QUIT:
-            self._pyg.quit()
-        
-
-    def _check_ship_shot(self, event) -> None:
-        if self._keydown_pressed(event):
-            if self._shoot_pressed(event):
-                ship_logic.shoot_ships(self._ships_store.ships, event.key)
-            
-
-    def _keydown_pressed(self, event) -> bool:
-        return event.type == self._pyg.KEYDOWN
-
-            
-    def _shoot_pressed(self, event) -> bool:
-        return event.key == self._pyg.K_LCTRL or event.key == self._pyg.K_RCTRL
+    def __handle_key_presses(self, event) -> None:
+        if self.__key_pressed(event.type):
+            for ship in self.__ships:
+                
+                if self.__shoot_key_pressed(event.key, ship):
+                    ship.shoot()
+                    
+                if self.__move_key_pressed(event.key, ship):
+                    ship.move(event.key)
+                    
+    
+    def __shoot_key_pressed(self, key, ship: Ship) -> bool:
+        return key == ship.control_scheme["SHOOT"]
+    
+    
+    def __move_key_pressed(self, key, ship: Ship):
+        return key in (ship.control_scheme["LEFT"], 
+                       ship.control_scheme["UP"], 
+                       ship.control_scheme["RIGHT"], 
+                       ship.control_scheme["DOWN"])

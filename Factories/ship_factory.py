@@ -2,7 +2,8 @@ import os
 import pygame
 from Models.ship import Ship
 from Models.ui import UI
-from control_schemes import ControlSchemes
+from Settings.colors import Colors
+from Settings.control_schemes import ControlSchemes
 
 
 class ShipFactory:
@@ -12,30 +13,30 @@ class ShipFactory:
         return [
             Ship(spawn_side = "left",
                  color_text = "Yellow",
-                 color_value = UI.Colors.YELLOW,
+                 color_value = Colors.YELLOW,
                  control_scheme = ControlSchemes.LEFT_CONTROLS,
-                 ship_sprite = self._load_ship_sprite("ship_yellow.png", rotation = 90),
-                 ship_rect = self._load_ship_rect(start_x_loc = self._set_start_x_loc(0.25),
-                                                  start_y_loc = self._set_start_y_loc(2))
+                 sprite = self._load_ship_sprite("ship_yellow.png", rotation = 90),
+                 rect = self._load_ship_rect(start_x_loc = self.__get_spawn_x_loc(0.25),
+                                                  start_y_loc = self.__get_spawn_y_loc(0.5))
                  ),
             
             Ship(spawn_side = "right",
                  color_text = "Red",
-                 color_value = UI.Colors.RED,
+                 color_value = Colors.RED,
                  control_scheme = ControlSchemes.RIGHT_CONTROLS,
-                 ship_sprite = self._load_ship_sprite("ship_red.png", rotation = -90),
-                 ship_rect = self._load_ship_rect(start_x_loc = self._set_start_x_loc(0.75),
-                                                  start_y_loc = self._set_start_y_loc(2))
+                 sprite = self._load_ship_sprite("ship_red.png", rotation = -90),
+                 rect = self._load_ship_rect(start_x_loc = self.__get_spawn_x_loc(0.75),
+                                                  start_y_loc = self.__get_spawn_y_loc(0.5))
                  )
         ]
         
         
-    def _set_start_x_loc(self, amount):
-        return (UI.WIN_WIDTH*amount) - (Ship.WIDTH/2)
+    def __get_spawn_x_loc(self, x_pos_of_window):
+        return (UI.WIN_WIDTH*x_pos_of_window) - (Ship.WIDTH/2)
     
     
-    def _set_start_y_loc(self, amount):
-        return (UI.WIN_HEIGHT/amount) - (Ship.HEIGHT/2)
+    def __get_spawn_y_loc(self, y_pos_of_window):
+        return (UI.WIN_HEIGHT*y_pos_of_window) - (Ship.HEIGHT/2)
         
         
     def _load_ship_sprite(self, image_path: str, rotation: int) -> pygame.Surface:

@@ -1,18 +1,9 @@
 import pygame
+from Models.ship import Ship
+from Settings.colors import Colors
 
 class UI:
     
-    class Colors: 
-        BLACK = (0, 0, 0)
-        WHITE = (255, 255, 255)
-        GREY = (105,105,105)
-
-        RED = (255,0,0)
-        GREEN = (0, 255, 0)
-        BLUE = (0, 0, 255)
-
-        YELLOW = (255,255,0)
-           
     WIN_WIDTH = 900
     WIN_HEIGHT = 500
     WIN_BACKGROUND_COLOR = Colors.GREY
@@ -24,12 +15,12 @@ class UI:
         CENTER_LINE_WIDTH,
         WIN_HEIGHT)
     
-    def __init__(self, pyg: pygame, ships) -> None:
+    
+    def __init__(self, pyg: pygame, ships: list[Ship]) -> None:
         self._pyg = pyg
-        
+        self._window = self._pyg.display.set_mode(size=(self.WIN_WIDTH, self.WIN_HEIGHT))
         self._ships = ships
         
-        self._window = self._pyg.display.set_mode(size=(self.WIN_WIDTH, self.WIN_HEIGHT))
     
     def draw_window(self) -> None:
         self._draw_background()
@@ -46,7 +37,7 @@ class UI:
     def _draw_center_line(self):
         self._pyg.draw.rect(
             surface = self._window, 
-            color = self.Colors.BLACK, 
+            color = Colors.BLACK, 
             rect = self.CENTER_LINE, 
             border_radius = 100)
     
@@ -62,4 +53,5 @@ class UI:
 
     def _draw_ships(self):
         for ship in self._ships:
-            self._window.blit(ship.ship_sprite, (ship.ship_rect.x, ship.ship_rect.y))
+            self._window.blit(ship.sprite, (ship.rect.x, ship.rect.y))
+            
