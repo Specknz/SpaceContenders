@@ -1,5 +1,4 @@
 import pygame
-from Models.ship import Ship
 from Settings.colors import Colors
 
 class UI:
@@ -16,7 +15,7 @@ class UI:
         WIN_HEIGHT)
     
     
-    def __init__(self, pyg: pygame, ships: list[Ship]) -> None:
+    def __init__(self, pyg: pygame, ships) -> None:
         self._pyg = pyg
         self._window = self._pyg.display.set_mode(size=(self.WIN_WIDTH, self.WIN_HEIGHT))
         self._ships = ships

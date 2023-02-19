@@ -11,7 +11,10 @@ class EventHandler:
     def handle_events(self) -> None:
         for event in self.__pyg.event.get():
                 self.__handle_quit(event)
-                self.__handle_key_presses(event)
+                self.__handle_key_down(event)
+                
+        for ship in self.__ships:
+            ship.move(self.__pyg.key.get_pressed())  
                         
                         
     def __handle_quit(self, event) -> None:
@@ -23,23 +26,14 @@ class EventHandler:
         return event_type == self.__pyg.KEYDOWN    
 
 
-    def __handle_key_presses(self, event) -> None:
+    def __handle_key_down(self, event) -> None:
         if self.__key_pressed(event.type):
             for ship in self.__ships:
                 
                 if self.__shoot_key_pressed(event.key, ship):
                     ship.shoot()
                     
-                if self.__move_key_pressed(event.key, ship):
-                    ship.move(event.key)
-                    
     
     def __shoot_key_pressed(self, key, ship: Ship) -> bool:
         return key == ship.control_scheme["SHOOT"]
     
-    
-    def __move_key_pressed(self, key, ship: Ship):
-        return key in (ship.control_scheme["LEFT"], 
-                       ship.control_scheme["UP"], 
-                       ship.control_scheme["RIGHT"], 
-                       ship.control_scheme["DOWN"])

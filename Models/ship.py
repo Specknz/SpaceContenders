@@ -49,42 +49,44 @@ class Ship:
             self.shot_bullets.append(bullet)
             
             
-    def move(self, key):
-        if key == self.control_scheme["LEFT"] and (self.rect.x - Ship.MOVE_SPEED) > 0:
+    def move(self, keys_pressed):
+        if keys_pressed[self.control_scheme["LEFT"]]:
             self.__move_left()
             
-        if key == self.control_scheme["RIGHT"] and (self.rect.x + Ship.MOVE_SPEED) + Ship.HEIGHT < UI.WIN_WIDTH:
+        if keys_pressed[self.control_scheme["RIGHT"]]:
             self.__move_right()
 
-        if key == self.control_scheme["UP"] and (self.rect.y - Ship.MOVE_SPEED) > 0:
+        if keys_pressed[self.control_scheme["UP"]]:
             self.__move_up()
 
-        if key == self.control_scheme["DOWN"] and (self.rect.y + Ship.MOVE_SPEED) + Ship.WIDTH < UI.WIN_HEIGHT:
+        if keys_pressed[self.control_scheme["DOWN"]]:
             self.__move_down()
         
             
     def __move_left(self):
-        if self.spawn_side == "left":
+        if self.spawn_side == "left" and (self.rect.x - Ship.MOVE_SPEED) > 0:
                 self.rect.x -= Ship.MOVE_SPEED
 
-        elif self.rect.x - Ship.MOVE_SPEED > UI.CENTER_LINE.x + UI.CENTER_LINE_WIDTH:
+        elif self.rect.x - Ship.MOVE_SPEED > (UI.CENTER_LINE.x + UI.CENTER_LINE_WIDTH):
             self.rect.x -= Ship.MOVE_SPEED
             
             
     def __move_right(self):
-        if self.spawn_side == "right":
+        if self.spawn_side == "right" and (self.rect.x + Ship.MOVE_SPEED + Ship.HEIGHT) < UI.WIN_WIDTH:
                 self.rect.x += Ship.MOVE_SPEED
 
-        elif self.rect.x + Ship.MOVE_SPEED < UI.CENTER_LINE.x - Ship.HEIGHT:
+        elif self.rect.x + Ship.MOVE_SPEED < (UI.CENTER_LINE.x - Ship.HEIGHT):
             self.rect.x += Ship.MOVE_SPEED
             
             
     def __move_up(self):
-        self.rect.y -= Ship.MOVE_SPEED
+        if (self.rect.y - Ship.MOVE_SPEED) > 0:
+            self.rect.y -= Ship.MOVE_SPEED
         
         
     def __move_down(self):
-        self.rect.y += Ship.MOVE_SPEED
+        if (self.rect.y + Ship.MOVE_SPEED) + Ship.WIDTH < UI.WIN_HEIGHT:
+            self.rect.y += Ship.MOVE_SPEED
             
             
     def __get_bullet_x_spawn_adjustment(self):
