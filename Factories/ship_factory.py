@@ -56,15 +56,15 @@ class ShipFactory:
                  )
     
     
-    def __create_ship(self, rotation, spawn_x_loc: Callable[[int], int], spawn_y_loc: Callable[[int], int]):
-        return Ship(spawn_side = "right",
-                 color_text = "Red",
-                 color_value = Colors.RED,
-                 control_scheme = ControlSchemes.RIGHT_CONTROLS_1,
-                 sprite = self._load_ship_sprite("ship_red.png", rotation),
-                 rect = self._load_ship_rect(start_x_loc = spawn_x_loc(), 
-                                             start_y_loc = spawn_y_loc())
-                 )
+    # def __create_ship(self, rotation, spawn_x_loc: Callable[[int], int], spawn_y_loc: Callable[[int], int]):
+    #     return Ship(spawn_side = "right",
+    #              color_text = "Red",
+    #              color_value = Colors.RED,
+    #              control_scheme = ControlSchemes.RIGHT_CONTROLS_1,
+    #              sprite = self._load_ship_sprite("ship_red.png", rotation),
+    #              rect = self._load_ship_rect(start_x_loc = spawn_x_loc(), 
+    #                                          start_y_loc = spawn_y_loc())
+    #              )
         
     def __get_spawn_x_loc(self, x_pos_of_window, number_of_ships):
         return (UI.WIN_WIDTH*x_pos_of_window) - (Ship.WIDTH/number_of_ships)
