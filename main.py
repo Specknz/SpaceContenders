@@ -1,4 +1,5 @@
 import pygame
+from Factories.ship_factory import ShipFactory
 import bullet_logic
 from Models.ui import UI
 from event_handler import EventHandler
@@ -12,7 +13,12 @@ def main():
     clock = pyg.time.Clock()
     
     settings = SettingsManager()
+    
     ships_store = ShipsStore()
+    ships_factory = ShipFactory()
+    
+    ships_store.create_ships(ships_factory.create_1v1_ships())
+    
     event_handler = EventHandler(pyg, ships_store.ships)
     ui = UI(pyg, ships_store.ships)
     

@@ -1,5 +1,4 @@
 import os
-from typing import Callable
 import pygame
 from Models.ship import Ship
 from Models.ui import UI
@@ -40,8 +39,8 @@ class ShipFactory:
                  color_value = Colors.YELLOW,
                  control_scheme = ControlSchemes.LEFT_CONTROLS_1,
                  sprite = self._load_ship_sprite("ship_yellow.png", rotation = 90),
-                 rect = self._load_ship_rect(start_x_loc = self.__get_spawn_x_loc(0.25),
-                                                  start_y_loc = self.__get_spawn_y_loc(0.5))
+                 rect = self._load_ship_rect(start_x_loc = self.__get_spawn_x_loc(0.25, 2),
+                                                  start_y_loc = self.__get_spawn_y_loc(2))
                  )
     
     
@@ -51,8 +50,8 @@ class ShipFactory:
                  color_value = Colors.RED,
                  control_scheme = ControlSchemes.RIGHT_CONTROLS_1,
                  sprite = self._load_ship_sprite("ship_red.png", rotation = -90),
-                 rect = self._load_ship_rect(start_x_loc = self.__get_spawn_x_loc(0.75),
-                                                  start_y_loc = self.__get_spawn_y_loc(0.5))
+                 rect = self._load_ship_rect(start_x_loc = self.__get_spawn_x_loc(0.75, 2),
+                                                  start_y_loc = self.__get_spawn_y_loc(2))
                  )
     
     
@@ -66,12 +65,12 @@ class ShipFactory:
     #                                          start_y_loc = spawn_y_loc())
     #              )
         
-    def __get_spawn_x_loc(self, x_pos_of_window, number_of_ships):
-        return (UI.WIN_WIDTH*x_pos_of_window) - (Ship.WIDTH/number_of_ships)
+    def __get_spawn_x_loc(self, x_pos_of_window):
+        return (UI.WIN_WIDTH*x_pos_of_window) - (Ship.WIDTH/2)
     
     
-    def __get_spawn_y_loc(self, y_pos_of_window, number_of_ships):
-        return (UI.WIN_HEIGHT*y_pos_of_window) - (Ship.HEIGHT/number_of_ships)
+    def __get_spawn_y_loc(self, total_num_of_ships):
+        return (UI.WIN_HEIGHT/total_num_of_ships) - (Ship.HEIGHT/2)
         
         
     def _load_ship_sprite(self, image_path: str, rotation: int) -> pygame.Surface:

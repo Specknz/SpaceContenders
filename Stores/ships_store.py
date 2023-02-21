@@ -1,6 +1,15 @@
-from Factories.ship_factory import ShipFactory
+from typing import Callable
 
 class ShipsStore:
     def __init__(self):
-        self.ship_factory = ShipFactory()
-        self.ships = self.ship_factory.create_1v1_ships()
+        pass
+        
+    def create_ships(self, ship_factory: Callable[[], list] ):
+        self.ships = ship_factory()
+        
+        
+    def clear_ships(self):
+        self.ships = []
+        
+        
+        
