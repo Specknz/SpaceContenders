@@ -17,7 +17,8 @@ class EventHandler:
                 self.__handle_key_down(event)
         self.__handle_movement()
         self.__handle_bullet_collision()
-                        
+        
+               
     def __handle_quit(self, event) -> None:
         if event.type == self.__pyg.QUIT:
             self.__pyg.quit()
@@ -29,6 +30,7 @@ class EventHandler:
                 
                 if self.__shoot_key_pressed(event.key, ship):
                     ship.shoot()
+      
                     
     def __key_pressed(self, event_type) -> bool:
         return event_type == self.__pyg.KEYDOWN   
