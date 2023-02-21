@@ -1,3 +1,4 @@
+from asyncio import Event
 import pygame
 from Models.bullet import Bullet
 from Models.ship import Ship
@@ -41,18 +42,11 @@ class EventHandler:
         for ship in self.__ships:
             ship.move(self.__pyg.key.get_pressed())  
             for bullet in ship.shot_bullets:
-                bullet.move()
-                
-                
-                
+                bullet.move(ship.spawn_side)
+                         
     
     def __handle_bullet_collision(self):
-        
-        ship_index = 0
         for ship in self.__ships:
-            if ship_index % 2 == 0:
-                
-                
             for bullet in ship.shot_bullets:
                 self.__handle_bullet_wall_collision(ship, bullet)
                 if (bullet in ship.shot_bullets):
@@ -64,22 +58,10 @@ class EventHandler:
             ship.shot_bullets.remove(bullet)
 
 
-    def __handle_bullet_ship_collision(self, current_ship: Ship, bullet: Bullet) -> None:
-        # if ship.spawn_side == "left":
-        #     if (bullet.rect.x + bullet.WIDTH) >= enemy_ship.rect.x and bullet.rect.x <= (enemy_ship.rect.x + Ship.HEIGHT):
-        #         if bullet.rect.y >= enemy_ship.rect.y and bullet.rect.y <= (enemy_ship.rect.y + Ship.WIDTH):
-        #             enemy_ship.health -= 1
-        #             ship.shot_bullets.remove(bullet)
-
-        # if ship.spawn_side == "right":
-        #     if bullet.rect.x >= enemy_ship.rect.x and bullet.rect.x <= (enemy_ship.rect.x + Ship.HEIGHT):
-        #         if bullet.rect.y >= enemy_ship.rect.y and bullet.rect.y <= (enemy_ship.rect.y + Ship.WIDTH):
-        #             enemy_ship.health -= 1
-        #             ship.shot_bullets.remove(bullet)
-        
+    def __handle_bullet_ship_collision(self, current_ship: Ship, bullet: Bullet) -> None:        
         enemy_ships = [ship for ship in self.__ships if ship.spawn_side != current_ship.spawn_side]
         
-        for ship in enemy_ships:
-            if bullet.rect.colliderect(ship.rect):
-                ship.health -= 1
+        for enemy_ship in enemy_ships:
+            if bullet.rect.colliderect(enemy_ship.rect):
+                enemy_ship.health -= 1
                 current_ship.shot_bullets.remove(bullet)
