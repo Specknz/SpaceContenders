@@ -39,7 +39,7 @@ class ShipFactory:
                  color_value = Colors.YELLOW,
                  control_scheme = ControlSchemes.LEFT_CONTROLS_1,
                  sprite = self._load_ship_sprite("ship_yellow.png", rotation = 90),
-                 rect = self._load_ship_rect(start_x_loc = self.__get_spawn_x_loc(0.25, 2),
+                 rect = self._load_ship_rect(start_x_loc = self.__get_spawn_x_loc(0.25),
                                                   start_y_loc = self.__get_spawn_y_loc(2))
                  )
     
@@ -50,7 +50,7 @@ class ShipFactory:
                  color_value = Colors.RED,
                  control_scheme = ControlSchemes.RIGHT_CONTROLS_1,
                  sprite = self._load_ship_sprite("ship_red.png", rotation = -90),
-                 rect = self._load_ship_rect(start_x_loc = self.__get_spawn_x_loc(0.75, 2),
+                 rect = self._load_ship_rect(start_x_loc = self.__get_spawn_x_loc(0.75),
                                                   start_y_loc = self.__get_spawn_y_loc(2))
                  )
     
