@@ -32,7 +32,7 @@ def main():
 
         event_handler.handle_events()
         
-        bullet_logic.move_bullets(ships_store)
+        # bullet_logic.move_bullets(ships_store)
 
 
 if __name__ == "__main__":
