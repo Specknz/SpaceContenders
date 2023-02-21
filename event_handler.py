@@ -27,7 +27,6 @@ class EventHandler:
     def __handle_key_down(self, event) -> None:
         if self.__key_pressed(event.type):
             for ship in self.__ships:
-                
                 if self.__shoot_key_pressed(event.key, ship):
                     ship.shoot()
       
