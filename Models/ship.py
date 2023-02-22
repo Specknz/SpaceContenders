@@ -66,8 +66,7 @@ class Ship:
         
             
     def __move_left(self):
-        next_position = pygame.Rect(self.rect.x, self.rect.y, self.WIDTH, self.HEIGHT)
-        next_position.x -= self.MOVE_SPEED
+        next_position = self.__get_next_position(-(self.MOVE_SPEED))
         
         if (self.rect.x - self.MOVE_SPEED) > 0 and not next_position.colliderect(UI.CENTER_LINE):
             self.rect.x -= self.MOVE_SPEED
@@ -82,8 +81,7 @@ class Ship:
             
             
     def __move_right(self): 
-        next_position = pygame.Rect(self.rect.x, self.rect.y, self.WIDTH, self.HEIGHT)
-        next_position.x += self.MOVE_SPEED
+        next_position = self.__get_next_position(self.MOVE_SPEED)
         
         if (self.rect.x + self.MOVE_SPEED) < UI.WIN_WIDTH and not next_position.colliderect(UI.CENTER_LINE):
             self.rect.x += self.MOVE_SPEED
@@ -112,3 +110,9 @@ class Ship:
             return self.HEIGHT
         
         return 0
+    
+    
+    def __get_next_position(self, amount):
+        next_position = pygame.Rect(self.rect.x, self.rect.y, self.WIDTH, self.HEIGHT)
+        next_position.x += amount
+        return next_position

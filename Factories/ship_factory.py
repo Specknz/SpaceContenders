@@ -85,5 +85,5 @@ class ShipFactory:
         return pygame.Rect(
                 start_x_loc, 
                 start_y_loc, 
-                Ship.WIDTH,
-                Ship.HEIGHT)
+                Ship.HEIGHT,
+                Ship.WIDTH)
