@@ -53,8 +53,8 @@ class UI:
     def _draw_ships(self):
         for ship in self._ships:
             self._window.blit(ship.sprite, (ship.rect.x, ship.rect.y))
-            self._pyg.draw.rect(
-                        surface = self._window, 
-                        color = ship.color_value, 
-                        rect = ship.rect)
+            # self._pyg.draw.rect(
+            #             surface = self._window, 
+            #             color = ship.color_value, 
+            #             rect = ship.rect)
             
