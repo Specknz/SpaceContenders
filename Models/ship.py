@@ -53,56 +53,42 @@ class Ship:
             
     def move(self, keys_pressed):
         if keys_pressed[self.control_scheme["LEFT"]]:
-            self.__move_left()
+            self.__move_x( -(self.MOVE_SPEED) )
             
         if keys_pressed[self.control_scheme["RIGHT"]]:
-            self.__move_right()
+            self.__move_x(self.MOVE_SPEED)
             
         if keys_pressed[self.control_scheme["UP"]]:
-            self.__move_up()
+            self.__move_y( -(self.MOVE_SPEED) )
 
         if keys_pressed[self.control_scheme["DOWN"]]:
-            self.__move_down()
+            self.__move_y(self.MOVE_SPEED)
         
-            
-    def __move_left(self):
-        next_position = self.__get_next_position(-(self.MOVE_SPEED))
         
-        if (self.rect.x - self.MOVE_SPEED) > 0 and not next_position.colliderect(UI.CENTER_LINE):
-            self.rect.x -= self.MOVE_SPEED
-            logging.debug(f"{self.color_text} ship moved LEFT")
+    def __move_x(self, amount_to_move):
+        next_position: pygame.Rect = self.__get_next_position('x', amount_to_move)
+        
+        if (next_position.x > 0) and (next_position.x + self.HEIGHT < UI.WIN_WIDTH) and not (next_position.colliderect(UI.CENTER_LINE)):
+            self.rect.x += amount_to_move
+            logging.debug(f"{self.color_text} ship moved {'Right' if amount_to_move > 0 else 'Left'}")
             return
             
-        if self.rect.colliderect(UI.CENTER_LINE):
+        if next_position.colliderect(UI.CENTER_LINE):
             logging.debug(f"{self.color_text} ship colliding with center line")
             return
         
         logging.debug(f"{self.color_text} ship colliding with outer wall")
             
             
-    def __move_right(self): 
-        next_position = self.__get_next_position(self.MOVE_SPEED)
+    def __move_y(self, amount_to_move):
+        next_position: pygame.Rect = self.__get_next_position('y', amount_to_move)
         
-        if (self.rect.x + self.MOVE_SPEED) < UI.WIN_WIDTH and not next_position.colliderect(UI.CENTER_LINE):
-            self.rect.x += self.MOVE_SPEED
-            logging.debug(f"{self.color_text} ship moved RIGHT")
+        if (next_position.y > 0) and (next_position.y + self.WIDTH < UI.WIN_HEIGHT):
+            self.rect.y += amount_to_move
+            logging.debug(f"{self.color_text} ship moved {'Down' if amount_to_move > 0 else 'Up'}")
             return
-
-        if self.rect.colliderect(UI.CENTER_LINE):
-            logging.debug(f"{self.color_text} ship colliding with center line")
-            return
-            
+        
         logging.debug(f"{self.color_text} ship colliding with outer wall")
-            
-            
-    def __move_up(self):
-        if (self.rect.y - self.MOVE_SPEED) > 0:
-            self.rect.y -= self.MOVE_SPEED
-        
-        
-    def __move_down(self):
-        if (self.rect.y + self.MOVE_SPEED) + self.WIDTH < UI.WIN_HEIGHT:
-            self.rect.y += self.MOVE_SPEED
             
             
     def __get_bullet_x_spawn_adjustment(self):
@@ -112,7 +98,16 @@ class Ship:
         return 0
     
     
-    def __get_next_position(self, amount):
-        next_position = pygame.Rect(self.rect.x, self.rect.y, self.HEIGHT, self.WIDTH)
-        next_position.x += amount
+    def __get_next_position(self, axis, amount_to_move) -> pygame.Rect:
+        if axis == 'x':
+            next_position = pygame.Rect(self.rect.x + amount_to_move, 
+                                        self.rect.y, 
+                                        self.HEIGHT, 
+                                        self.WIDTH)
+        elif axis == 'y':
+            next_position = pygame.Rect(self.rect.x, 
+                                        self.rect.y + amount_to_move, 
+                                        self.HEIGHT, 
+                                        self.WIDTH)
+            
         return next_position
