@@ -1,3 +1,4 @@
+import logging
 import pygame
 from Factories.bullet_factory import BulletFactory
 from Models.bullet import Bullet
@@ -47,6 +48,7 @@ class Ship:
                                                  self.WIDTH)
             
             self.shot_bullets.append(bullet)
+            logging.debug(f"{self.color_text} ship shot")
             
             
     def move(self, keys_pressed):
@@ -55,7 +57,7 @@ class Ship:
             
         if keys_pressed[self.control_scheme["RIGHT"]]:
             self.__move_right()
-
+            
         if keys_pressed[self.control_scheme["UP"]]:
             self.__move_up()
 
@@ -64,33 +66,43 @@ class Ship:
         
             
     def __move_left(self):
-        if self.spawn_side == "left" and (self.rect.x - Ship.MOVE_SPEED) > 0:
-                self.rect.x -= Ship.MOVE_SPEED
-
-        elif self.rect.x - Ship.MOVE_SPEED > (UI.CENTER_LINE.x + UI.CENTER_LINE_WIDTH):
-            self.rect.x -= Ship.MOVE_SPEED
+        
+        if (self.rect.x - self.MOVE_SPEED) > 0:
+            self.rect.x -= self.MOVE_SPEED
+            logging.debug(f"{self.color_text} ship moved LEFT")
+            return
+            
+        if self.rect.colliderect(UI.CENTER_LINE):
+            logging.debug(f"{self.color_text} ship colliding with center line")
+            return
+        
+        logging.debug(f"{self.color_text} ship colliding with outer wall")
             
             
-    def __move_right(self):
-        if self.spawn_side == "right" and (self.rect.x + Ship.MOVE_SPEED + Ship.HEIGHT) < UI.WIN_WIDTH:
-                self.rect.x += Ship.MOVE_SPEED
+    def __move_right(self): 
+        if (self.rect.x + self.MOVE_SPEED + self.HEIGHT) < UI.WIN_WIDTH:
+            self.rect.x += self.MOVE_SPEED
+            logging.debug(f"{self.color_text} ship moved RIGHT")
+            return
 
-        elif self.rect.x + Ship.MOVE_SPEED < (UI.CENTER_LINE.x - Ship.HEIGHT):
-            self.rect.x += Ship.MOVE_SPEED
+        if self.rect.colliderect(UI.CENTER_LINE):
+            logging.debug(f"{self.color_text} ship colliding with center line")
+            return
+            
+        logging.debug(f"{self.color_text} ship colliding with outer wall")
             
             
     def __move_up(self):
-        if (self.rect.y - Ship.MOVE_SPEED) > 0:
-            self.rect.y -= Ship.MOVE_SPEED
+        if (self.rect.y - self.MOVE_SPEED) > 0:
+            self.rect.y -= self.MOVE_SPEED
         
         
     def __move_down(self):
-        if (self.rect.y + Ship.MOVE_SPEED) + Ship.WIDTH < UI.WIN_HEIGHT:
-            self.rect.y += Ship.MOVE_SPEED
+        if (self.rect.y + self.MOVE_SPEED) + self.WIDTH < UI.WIN_HEIGHT:
+            self.rect.y += self.MOVE_SPEED
             
             
     def __get_bullet_x_spawn_adjustment(self):
-        
         if self.spawn_side == "left":
             return self.HEIGHT
         

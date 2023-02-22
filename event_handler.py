@@ -13,16 +13,22 @@ class EventHandler:
 
     def handle_events(self) -> None:
         for event in self.__pyg.event.get():
-                self.__handle_quit(event)
+                if self.__handle_quit(event):
+                    return False
+                
                 self.__handle_key_down(event)
+                
         self.__handle_movement()
         self.__handle_bullet_collision()
         
+        return True
+        
                
-    def __handle_quit(self, event) -> None:
+    def __handle_quit(self, event) -> bool:
         if event.type == self.__pyg.QUIT:
             self.__pyg.quit()
-    
+            return True
+        return False
 
     def __handle_key_down(self, event) -> None:
         if self.__key_pressed(event.type):

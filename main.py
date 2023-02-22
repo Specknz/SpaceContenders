@@ -31,7 +31,7 @@ def main():
         
         clock.tick(settings.fps)
 
-        event_handler.handle_events()
+        game_running = event_handler.handle_events()
 
 
 def setup_logger():
