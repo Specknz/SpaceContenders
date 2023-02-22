@@ -1,3 +1,4 @@
+import logging
 from typing import Callable
 from Models.ship import Ship
 
@@ -7,6 +8,7 @@ class ShipsStore:
         
     def create_ships(self, ship_factory: Callable[[], list[Ship]]):
         self.ships = ship_factory()
+        logging.debug("Ships created")
         
         
     def clear_ships(self):

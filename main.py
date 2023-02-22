@@ -1,4 +1,5 @@
 import pygame
+import logging
 from Factories.ship_factory import ShipFactory
 from Models.ui import UI
 from event_handler import EventHandler
@@ -11,6 +12,7 @@ def main():
     pyg.display.set_caption("Space Contenders")
     clock = pyg.time.Clock()
     
+    setup_logger()
     settings = SettingsManager()
     
     ships_store = ShipsStore()
@@ -31,6 +33,13 @@ def main():
 
         event_handler.handle_events()
 
+
+def setup_logger():
+    logging.basicConfig(level=logging.DEBUG,
+                        format='%(levelname)s:%(asctime)s: %(message)s', 
+                        datefmt="%Y-%m-%d %H:%M:%S")
+    
+    
 
 if __name__ == "__main__":
     main()
