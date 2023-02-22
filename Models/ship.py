@@ -113,6 +113,6 @@ class Ship:
     
     
     def __get_next_position(self, amount):
-        next_position = pygame.Rect(self.rect.x, self.rect.y, self.WIDTH, self.HEIGHT)
+        next_position = pygame.Rect(self.rect.x, self.rect.y, self.HEIGHT, self.WIDTH)
         next_position.x += amount
         return next_position

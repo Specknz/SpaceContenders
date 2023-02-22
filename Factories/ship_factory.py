@@ -66,11 +66,11 @@ class ShipFactory:
     #              )
         
     def __get_spawn_x_loc(self, x_pos_of_window):
-        return (UI.WIN_WIDTH*x_pos_of_window) - (Ship.WIDTH/2)
+        return (UI.WIN_WIDTH*x_pos_of_window) - (Ship.HEIGHT/2)
     
     
     def __get_spawn_y_loc(self, total_num_of_ships):
-        return (UI.WIN_HEIGHT/total_num_of_ships) - (Ship.HEIGHT/2)
+        return (UI.WIN_HEIGHT/total_num_of_ships) - (Ship.WIDTH/2)
         
         
     def _load_ship_sprite(self, image_path: str, rotation: int) -> pygame.Surface:
