@@ -8,8 +8,9 @@ class UI:
     WIN_BACKGROUND_COLOR = Colors.GREY
 
     CENTER_LINE_WIDTH = 10
+    
     CENTER_LINE = pygame.Rect(
-        (WIN_WIDTH/2)-(CENTER_LINE_WIDTH/2),
+        WIN_WIDTH/2 - CENTER_LINE_WIDTH/2,
         0,
         CENTER_LINE_WIDTH,
         WIN_HEIGHT)
@@ -37,8 +38,7 @@ class UI:
         self._pyg.draw.rect(
             surface = self._window, 
             color = Colors.BLACK, 
-            rect = self.CENTER_LINE, 
-            border_radius = 100)
+            rect = self.CENTER_LINE)
     
     
     def _draw_bullets(self):

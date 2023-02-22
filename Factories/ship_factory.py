@@ -40,7 +40,7 @@ class ShipFactory:
                  control_scheme = ControlSchemes.LEFT_CONTROLS_1,
                  sprite = self._load_ship_sprite("ship_yellow.png", rotation = 90),
                  rect = self._load_ship_rect(start_x_loc = self.__get_spawn_x_loc(0.25),
-                                                  start_y_loc = self.__get_spawn_y_loc(2))
+                                             start_y_loc = self.__get_spawn_y_loc(2))
                  )
     
     
@@ -51,7 +51,7 @@ class ShipFactory:
                  control_scheme = ControlSchemes.RIGHT_CONTROLS_1,
                  sprite = self._load_ship_sprite("ship_red.png", rotation = -90),
                  rect = self._load_ship_rect(start_x_loc = self.__get_spawn_x_loc(0.75),
-                                                  start_y_loc = self.__get_spawn_y_loc(2))
+                                             start_y_loc = self.__get_spawn_y_loc(2))
                  )
     
     

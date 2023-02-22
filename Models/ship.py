@@ -10,7 +10,7 @@ class Ship:
     WIDTH = 50
     HEIGHT = 40
     SIZE = (WIDTH, HEIGHT)
-    MOVE_SPEED = 5
+    MOVE_SPEED = 4
     MAX_BULLETS = 6
     
     def __init__(self, 
@@ -66,8 +66,10 @@ class Ship:
         
             
     def __move_left(self):
+        next_position = pygame.Rect(self.rect.x, self.rect.y, self.WIDTH, self.HEIGHT)
+        next_position.x -= self.MOVE_SPEED
         
-        if (self.rect.x - self.MOVE_SPEED) > 0:
+        if (self.rect.x - self.MOVE_SPEED) > 0 and not next_position.colliderect(UI.CENTER_LINE):
             self.rect.x -= self.MOVE_SPEED
             logging.debug(f"{self.color_text} ship moved LEFT")
             return
@@ -80,7 +82,10 @@ class Ship:
             
             
     def __move_right(self): 
-        if (self.rect.x + self.MOVE_SPEED + self.HEIGHT) < UI.WIN_WIDTH:
+        next_position = pygame.Rect(self.rect.x, self.rect.y, self.WIDTH, self.HEIGHT)
+        next_position.x += self.MOVE_SPEED
+        
+        if (self.rect.x + self.MOVE_SPEED) < UI.WIN_WIDTH and not next_position.colliderect(UI.CENTER_LINE):
             self.rect.x += self.MOVE_SPEED
             logging.debug(f"{self.color_text} ship moved RIGHT")
             return
