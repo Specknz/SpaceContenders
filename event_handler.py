@@ -2,8 +2,9 @@ import pygame
 from Models.ui import UI
 from Models.ship import Ship
 from Models.bullet import Bullet
-import Services.ship_movement_service as ShipMovementService
 from Stores.game_state_store import GameStateStore
+import Services.ship_shoot_service as ShipShootService
+import Services.ship_movement_service as ShipMovementService
 
 
 class EventHandler:
@@ -39,7 +40,7 @@ class EventHandler:
         if self.__key_pressed(event.type):
             for ship in self.__ships:
                 if self.__shoot_key_pressed(event.key, ship):
-                    ship.shoot()
+                    ShipShootService.shoot(ship)
       
                     
     def __key_pressed(self, event_type) -> bool:
