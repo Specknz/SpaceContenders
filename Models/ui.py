@@ -4,6 +4,8 @@ from Models.spawn_side import SpawnSide
 from Settings.colors import Colors
 from Stores.game_state_store import GameStateStore
 
+
+
 class UI:
     
     WIN_WIDTH = 900

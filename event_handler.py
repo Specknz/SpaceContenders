@@ -2,6 +2,7 @@ import pygame
 from Models.ui import UI
 from Models.ship import Ship
 from Models.bullet import Bullet
+import Services.ship_movement_service as ShipMovementService
 from Stores.game_state_store import GameStateStore
 
 
@@ -51,7 +52,7 @@ class EventHandler:
 
     def __handle_movement(self):
         for ship in self.__ships:
-            ship.move(self.__pyg.key.get_pressed())  
+            ShipMovementService.move(ship, self.__pyg.key.get_pressed())  
             for bullet in ship.shot_bullets:
                 bullet.move(ship.spawn_side)
                          
