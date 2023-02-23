@@ -1,4 +1,3 @@
-from asyncio import Event
 import pygame
 from Models.bullet import Bullet
 from Models.ship import Ship
@@ -6,21 +5,23 @@ from Models.ui import UI
 
 
 class EventHandler:
-    def __init__(self, pyg: pygame, ships: list[Ship]):
-        self.__pyg: pygame = pyg
-        self.__ships: list[Ship] = ships
+    def __init__(self, pyg: pygame, ui: UI, ships: list[Ship]):
+        self.__pyg = pyg
+        self.__ui = ui
+        self.__ships = ships
 
 
     def handle_events(self) -> None:
         for event in self.__pyg.event.get():
                 if self.__handle_quit(event):
                     return False
-                
-                self.__handle_key_down(event)
-                
+                self.__handle_key_down(event)      
         self.__handle_movement()
         self.__handle_bullet_collision()
         
+        if self.__handle_ship_health_depleted():
+            return False
+            
         return True
         
                
@@ -61,7 +62,7 @@ class EventHandler:
     
     
     def __handle_bullet_wall_collision(self, ship: Ship, bullet) -> None:
-        if bullet.rect.x < 0 or (bullet.rect.x + bullet.WIDTH) >= UI.WIN_WIDTH:
+        if bullet.rect.x < 0 or (bullet.rect.x + bullet.WIDTH) >= self.__ui.WIN_WIDTH:
             ship.shot_bullets.remove(bullet)
 
 
@@ -72,3 +73,23 @@ class EventHandler:
             if bullet.rect.colliderect(enemy_ship.rect):
                 enemy_ship.health -= 1
                 current_ship.shot_bullets.remove(bullet)
+                
+                
+    def __handle_ship_health_depleted(self):
+        for ship in self.__ships:
+            if ship.health <= 0:
+                self.__handle_win(ship)
+                return True
+            
+            
+    def __handle_win(self, ship: Ship):
+        losing_side = ship.spawn_side
+        
+        winning_ships = " ".join([str(ship) for ship in self.__ships if ship.spawn_side != losing_side]) 
+        
+        win_text = winning_ships + "win the match!"
+        
+        self.__ui.draw_winner_text(win_text)
+        self.__pyg.time.delay(5000)
+        
+        

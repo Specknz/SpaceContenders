@@ -100,14 +100,12 @@ class Ship:
     
     def __get_next_position(self, axis, amount_to_move) -> pygame.Rect:
         if axis == 'x':
-            next_position = pygame.Rect(self.rect.x + amount_to_move, 
-                                        self.rect.y, 
-                                        self.HEIGHT, 
-                                        self.WIDTH)
+            return pygame.Rect(self.rect.x + amount_to_move, 
+                               self.rect.y, 
+                               self.HEIGHT, 
+                               self.WIDTH)
         elif axis == 'y':
-            next_position = pygame.Rect(self.rect.x, 
-                                        self.rect.y + amount_to_move, 
-                                        self.HEIGHT, 
-                                        self.WIDTH)
-            
-        return next_position
+            return pygame.Rect(self.rect.x, 
+                               self.rect.y + amount_to_move, 
+                               self.HEIGHT, 
+                               self.WIDTH)

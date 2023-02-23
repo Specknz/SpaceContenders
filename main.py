@@ -9,20 +9,23 @@ from Settings.settings_manager import SettingsManager
 
 def main():
     pyg = pygame
+    pyg.font.init()
+    pyg.mixer.init()
     pyg.display.set_caption("Space Contenders")
     clock = pyg.time.Clock()
     
-    setup_logger()
-    settings = SettingsManager()
-    
     ships_store = ShipsStore()
     ships_factory = ShipFactory()
-    
     ships_store.create_ships(ships_factory.create_1v1_ships)
     
-    event_handler = EventHandler(pyg, ships_store.ships)
+    setup_logger()
+    
+    settings = SettingsManager()
+    
     ui = UI(pyg, ships_store.ships)
     
+    event_handler = EventHandler(pyg, ui, ships_store.ships)
+       
     game_running = True
 
     while game_running:
