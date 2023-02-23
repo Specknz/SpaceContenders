@@ -1,5 +1,8 @@
+import os
 import pygame
+from Models.spawn_side import SpawnSide
 from Settings.colors import Colors
+from Stores.game_state_store import GameStateStore
 
 class UI:
     
@@ -15,20 +18,27 @@ class UI:
                               WIN_HEIGHT)
     
     
-    def __init__(self, pyg: pygame, ships) -> None:
+    def __init__(self, pyg: pygame, game_state_store: GameStateStore, ships) -> None:
         self.__pyg = pyg
-        self.__window = self.__pyg.display.set_mode((self.WIN_WIDTH, self.WIN_HEIGHT))
         self.__ships = ships
-        self.__health_font = pyg.font.SysFont('Arial', 40)
+        self.__game_state_store = game_state_store
+        self.__background = self.__pyg.transform.scale(self.__pyg.image.load(
+            os.path.join('Assets', 'space.png')), (self.WIN_WIDTH, self.WIN_HEIGHT))
+        
+        self.__window = self.__pyg.display.set_mode((self.WIN_WIDTH, self.WIN_HEIGHT))
+        self.__health_font = pyg.font.SysFont('Arial', 20)
         self.__winner_font = pyg.font.SysFont('Arial', 20)
         
     
     def draw_window(self) -> None:
-        self.__draw_background()
-        self.__draw_center_line()
-        self.__draw_bullets()
-        self.__draw_ships()
-        self.__draw_ship_health()
+        if self.__game_state_store.GAME_RUNNING:
+            self.__draw_background()
+            self.__draw_center_line()
+            self.__draw_bullets()
+            self.__draw_ships()
+            self.__draw_ship_health()
+        else:
+            pass
         self.__pyg.display.update()
         
     
@@ -42,7 +52,7 @@ class UI:
         
     
     def __draw_background(self):
-        self.__window.fill(color = self.WIN_BACKGROUND_COLOR)
+        self.__window.blit(self.__background, (0, 0))
     
     
     def __draw_center_line(self):
@@ -67,9 +77,14 @@ class UI:
             
             
     def __draw_ship_health(self):
-        pass
-        # for ship in self._ships:
-        #     red_health_text = self.HEALTH_FONT.render( "Health: " + str(red_health), 1, WHITE)
-        #     yellow_health_text = self.HEALTH_FONT.render( "Health: " + str(yellow_health), 1, WHITE)
-        #     self._window.blit(red_health_text, (self.WIN_WIDTH - red_health_text.get_width() - 10, 10))
-        #     self._window.blit(yellow_health_text, (10, 10))
+        for ship in self.__ships:
+            health_text = self.__health_font.render(f"{ship.color_text} Health: {ship.health}", 
+                                                    1, 
+                                                    ship.color_value)
+            if ship.spawn_side == SpawnSide.Left:
+                self.__window.blit(health_text, (10, 10))
+                
+            if ship.spawn_side == SpawnSide.Right:
+                self.__window.blit(health_text, (self.WIN_WIDTH - health_text.get_width() - 10, 10))
+                
+                

@@ -1,5 +1,7 @@
 import pygame
 
+from Models.spawn_side import SpawnSide
+
 
 class Bullet:
     
@@ -13,10 +15,10 @@ class Bullet:
         
         
     def move(self, spawn_side):
-        if spawn_side == "left":
+        if spawn_side == SpawnSide.Left:
             self.rect.x += Bullet.SPEED
 
-        if spawn_side == "right":
+        if spawn_side == SpawnSide.Right:
             self.rect.x -= Bullet.SPEED
             
         

@@ -5,6 +5,7 @@ class SettingsManager:
     def __init__(self) -> None:
         self.__settings = self.load_settings()
         
+        self.ship_health = self.__settings["ShipHealth"]
         self.fps = self.__settings["FPS"]
         
         

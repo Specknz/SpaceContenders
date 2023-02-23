@@ -5,36 +5,32 @@ from Models.ui import UI
 from event_handler import EventHandler
 from Stores.ships_store import ShipsStore
 from Settings.settings_manager import SettingsManager
+from Stores.game_state_store import GameStateStore
 
 
 def main():
+    setup_logger()
+    
     pyg = pygame
     pyg.font.init()
     pyg.mixer.init()
     pyg.display.set_caption("Space Contenders")
     clock = pyg.time.Clock()
     
-    ships_store = ShipsStore()
-    ships_factory = ShipFactory()
-    ships_store.create_ships(ships_factory.create_1v1_ships)
-    
-    setup_logger()
-    
     settings = SettingsManager()
+    game_state_store = GameStateStore()
     
-    ui = UI(pyg, ships_store.ships)
+    ships_store = ShipsStore()
+    ships_factory = ShipFactory(settings)
+    ships_store.store_ships(ships_factory.create_1v1_ships)
     
-    event_handler = EventHandler(pyg, ui, ships_store.ships)
-       
-    game_running = True
+    ui = UI(pyg, game_state_store, ships_store.ships)
+    event_handler = EventHandler(pyg, ui, game_state_store, ships_store.ships)
 
-    while game_running:
-        
-        ui.draw_window()
-        
+    while game_state_store.GAME_RUNNING:
+        ui.draw_window() 
         clock.tick(settings.fps)
-
-        game_running = event_handler.handle_events()
+        event_handler.handle_events()
 
 
 def setup_logger():

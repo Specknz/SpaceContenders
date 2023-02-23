@@ -4,9 +4,10 @@ from Models.ship import Ship
 
 class ShipsStore:
     def __init__(self):
+        self.ships = []
         pass
         
-    def create_ships(self, ship_factory: Callable[[], list[Ship]]):
+    def store_ships(self, ship_factory: Callable[[], list[Ship]]):
         self.ships = ship_factory()
         
         

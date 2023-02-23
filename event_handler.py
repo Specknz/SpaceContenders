@@ -1,13 +1,15 @@
 import pygame
-from Models.bullet import Bullet
-from Models.ship import Ship
 from Models.ui import UI
+from Models.ship import Ship
+from Models.bullet import Bullet
+from Stores.game_state_store import GameStateStore
 
 
 class EventHandler:
-    def __init__(self, pyg: pygame, ui: UI, ships: list[Ship]):
+    def __init__(self, pyg: pygame, ui: UI, game_state_store: GameStateStore, ships: list[Ship]):
         self.__pyg = pyg
         self.__ui = ui
+        self.__game_state_store = game_state_store
         self.__ships = ships
 
 
@@ -20,7 +22,7 @@ class EventHandler:
         self.__handle_bullet_collision()
         
         if self.__handle_ship_health_depleted():
-            return False
+            self.__game_state_store.GAME_RESTART_MENU = True
             
         return True
         
@@ -30,6 +32,7 @@ class EventHandler:
             self.__pyg.quit()
             return True
         return False
+
 
     def __handle_key_down(self, event) -> None:
         if self.__key_pressed(event.type):
@@ -54,25 +57,24 @@ class EventHandler:
                          
     
     def __handle_bullet_collision(self):
-        for ship in self.__ships:
-            for bullet in ship.shot_bullets:
-                self.__handle_bullet_wall_collision(ship, bullet)
-                if (bullet in ship.shot_bullets):
-                    self.__handle_bullet_ship_collision(ship, bullet)
+        for bullet_owner in self.__ships:
+            for bullet in bullet_owner.shot_bullets:
+                self.__handle_bullet_wall_collision(bullet_owner, bullet)
+                if (bullet in bullet_owner.shot_bullets):
+                    self.__handle_bullet_ship_collision(bullet_owner, bullet)
     
     
-    def __handle_bullet_wall_collision(self, ship: Ship, bullet) -> None:
+    def __handle_bullet_wall_collision(self, bullet_owner: Ship, bullet: Bullet) -> None:
         if bullet.rect.x < 0 or (bullet.rect.x + bullet.WIDTH) >= self.__ui.WIN_WIDTH:
-            ship.shot_bullets.remove(bullet)
+            bullet_owner.shot_bullets.remove(bullet)
 
 
-    def __handle_bullet_ship_collision(self, current_ship: Ship, bullet: Bullet) -> None:        
-        enemy_ships = [ship for ship in self.__ships if ship.spawn_side != current_ship.spawn_side]
-        
+    def __handle_bullet_ship_collision(self, bullet_owner: Ship, bullet: Bullet) -> None:        
+        enemy_ships = [ship for ship in self.__ships if ship.spawn_side != bullet_owner.spawn_side]
         for enemy_ship in enemy_ships:
             if bullet.rect.colliderect(enemy_ship.rect):
-                enemy_ship.health -= 1
-                current_ship.shot_bullets.remove(bullet)
+                enemy_ship.damage()
+                bullet_owner.shot_bullets.remove(bullet)
                 
                 
     def __handle_ship_health_depleted(self):
@@ -84,12 +86,8 @@ class EventHandler:
             
     def __handle_win(self, ship: Ship):
         losing_side = ship.spawn_side
-        
         winning_ships = " ".join([str(ship) for ship in self.__ships if ship.spawn_side != losing_side]) 
-        
-        win_text = winning_ships + "win the match!"
-        
+        win_text = winning_ships + " win the match!"
         self.__ui.draw_winner_text(win_text)
-        self.__pyg.time.delay(5000)
         
         
