@@ -1,5 +1,5 @@
 import pygame
-from Models.ui import UI
+from UI.game_ui import GameUI
 from Models.ship import Ship
 from Models.bullet import Bullet
 from Stores.game_state_store import GameStateStore
@@ -7,11 +7,10 @@ import Services.ship_shoot_service as ShipShootService
 import Services.ship_movement_service as ShipMovementService
 
 
-class EventHandler:
-    def __init__(self, pyg: pygame, ui: UI, game_state_store: GameStateStore, ships: list[Ship]):
+class GameEventHandler:
+    def __init__(self, pyg: pygame, ui: GameUI, ships: list[Ship]):
         self.__pyg = pyg
         self.__ui = ui
-        self.__game_state_store = game_state_store
         self.__ships = ships
 
 
@@ -27,7 +26,7 @@ class EventHandler:
         self.__bullet_collision()
         
         if self.__ship_health_zero():
-            self.__game_state_store.GAME_RESTART_MENU = True
+            pass
             
         return True
         

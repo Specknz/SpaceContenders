@@ -1,11 +1,10 @@
 import pygame
 import logging
 from Factories.ship_factory import ShipFactory
-from Models.ui import UI
-from game_event_handler import EventHandler
+from UI.game_ui import GameUI
+from Handlers.game_event_handler import GameEventHandler
 from Stores.ships_store import ShipsStore
 from Settings.settings_manager import SettingsManager
-from Stores.game_state_store import GameStateStore
 
 
 def main():
@@ -18,45 +17,45 @@ def main():
     pyg.display.set_caption("Space Contenders")
     clock = pyg.time.Clock()
     
-    settings_manager = SettingsManager()
-    game_state_store = GameStateStore()
+    settings = SettingsManager()
     
-    ships_factory = ShipFactory(settings_manager)
+    ships_factory = ShipFactory(settings)
     ships_store = ShipsStore()
     ships_store.store_ships(ships_factory.create_1v1_ships)
     
-    ui = UI(pyg, game_state_store, ships_store.ships)
-    event_handler = EventHandler(pyg, ui, game_state_store, ships_store.ships)
+    main_menu(pyg, settings, ships_store, clock)
 
-    game_loop(settings_manager, ui, event_handler, clock)
-
-
-def setup_logger():
-    logging.basicConfig(level=logging.DEBUG,
-                        format='%(levelname)s:%(asctime)s: %(message)s', 
-                        datefmt="%Y-%m-%d %H:%M:%S")
-   
     
-def main_menu():
-    while True:
-        pass
+def main_menu(pyg: pygame, settings: SettingsManager, ships_store: ShipsStore, clock: pygame.time.Clock):
+    in_menu = True
+    while in_menu:
+        game(pyg, settings, ships_store, clock)
+        clock.tick(settings.fps)
 
 
-def game_setup_menu():
+def game_setup_menu(pyg: pygame, settings: SettingsManager, clock: pygame.time.Clock):
     pass
+        
 
-
-def game_loop(settings_manager: SettingsManager, ui: UI, event_handler: EventHandler, clock: pygame.time.Clock):
+def game(pyg: pygame, settings: SettingsManager, ships_store: ShipsStore, clock: pygame.time.Clock):
+    game_ui = GameUI(pyg, ships_store.ships)
+    game_event_handler = GameEventHandler(pyg, game_ui, ships_store.ships)
     
     game_running = True
     while game_running:
-        ui.draw_window() 
-        clock.tick(settings_manager.fps)
-        game_running = event_handler.handle_events()
+        game_ui.draw() 
+        game_running = game_event_handler.handle_events()
+        clock.tick(settings.fps)
         
         
 def options_menu():
     pass
+    
+    
+def setup_logger():
+    logging.basicConfig(level=logging.DEBUG,
+                        format='%(levelname)s:%(asctime)s: %(message)s', 
+                        datefmt="%Y-%m-%d %H:%M:%S")
     
     
 if __name__ == "__main__":

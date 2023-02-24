@@ -1,7 +1,8 @@
 import pygame
 import logging
 from Models.ship import Ship
-from Models.ui import UI
+from UI.game_ui import GameUI
+from UI.main_window import MainWindow
 
 
 def move(ship: Ship, keys_pressed):
@@ -21,12 +22,12 @@ def move(ship: Ship, keys_pressed):
 def __move_x(ship: Ship, amount_to_move):
     next_position: pygame.Rect = __get_next_position(ship, 'x', amount_to_move)
     
-    if (next_position.x > 0) and (next_position.x + ship.HEIGHT < UI.WIN_WIDTH) and not (next_position.colliderect(UI.CENTER_LINE)):
+    if (next_position.x > 0) and (next_position.x + ship.HEIGHT < MainWindow.WIDTH) and not (next_position.colliderect(GameUI.CENTER_LINE)):
         ship.rect.x += amount_to_move
         logging.debug(f"{ship.color_text} ship moved {'Right' if amount_to_move > 0 else 'Left'}")
         return
     
-    if next_position.colliderect(UI.CENTER_LINE):
+    if next_position.colliderect(GameUI.CENTER_LINE):
         logging.debug(f"{ship.color_text} ship colliding with center line")
         return
     
@@ -36,7 +37,7 @@ def __move_x(ship: Ship, amount_to_move):
 def __move_y(ship: Ship, amount_to_move):
     next_position: pygame.Rect = __get_next_position(ship, 'y', amount_to_move)
     
-    if (next_position.y > 0) and (next_position.y + ship.WIDTH < UI.WIN_HEIGHT):
+    if (next_position.y > 0) and (next_position.y + ship.WIDTH < MainWindow.HEIGHT):
         ship.rect.y += amount_to_move
         logging.debug(f"{ship.color_text} ship moved {'Down' if amount_to_move > 0 else 'Up'}")
         return
