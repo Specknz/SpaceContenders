@@ -15,28 +15,38 @@ class EventHandler:
         self.__ships = ships
 
 
-    def handle_events(self) -> None:
+    def handle_events(self):
         for event in self.__pyg.event.get():
-                if self.__handle_quit(event):
+            
+                if self.__quit(event):
                     return False
-                self.__handle_key_down(event)      
-        self.__handle_movement()
-        self.__handle_bullet_collision()
+                
+                self.__key_down(event)
+                 
+        self.__movement()
+        self.__bullet_collision()
         
-        if self.__handle_ship_health_depleted():
+        if self.__ship_health_zero():
             self.__game_state_store.GAME_RESTART_MENU = True
             
         return True
         
                
-    def __handle_quit(self, event) -> bool:
+    def __quit(self, event) -> bool:
+        
         if event.type == self.__pyg.QUIT:
             self.__pyg.quit()
             return True
+        
+        if self.__key_pressed(event.type):
+            if event.key == self.__pyg.K_ESCAPE:
+                self.__pyg.quit()
+                return True
+            
         return False
 
 
-    def __handle_key_down(self, event) -> None:
+    def __key_down(self, event) -> None:
         if self.__key_pressed(event.type):
             for ship in self.__ships:
                 if self.__shoot_key_pressed(event.key, ship):
@@ -51,14 +61,14 @@ class EventHandler:
         return key == ship.control_scheme["SHOOT"]
 
 
-    def __handle_movement(self):
+    def __movement(self):
         for ship in self.__ships:
             ShipMovementService.move(ship, self.__pyg.key.get_pressed())  
             for bullet in ship.shot_bullets:
                 bullet.move(ship.spawn_side)
                          
     
-    def __handle_bullet_collision(self):
+    def __bullet_collision(self):
         for bullet_owner in self.__ships:
             for bullet in bullet_owner.shot_bullets:
                 self.__handle_bullet_wall_collision(bullet_owner, bullet)
@@ -79,7 +89,7 @@ class EventHandler:
                 bullet_owner.shot_bullets.remove(bullet)
                 
                 
-    def __handle_ship_health_depleted(self):
+    def __ship_health_zero(self):
         for ship in self.__ships:
             if ship.health <= 0:
                 self.__handle_win(ship)
