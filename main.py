@@ -20,8 +20,8 @@ def main():
     settings = SettingsManager()
     game_state_store = GameStateStore()
     
-    ships_store = ShipsStore()
     ships_factory = ShipFactory(settings)
+    ships_store = ShipsStore()
     ships_store.store_ships(ships_factory.create_1v1_ships)
     
     ui = UI(pyg, game_state_store, ships_store.ships)
