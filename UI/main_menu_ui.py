@@ -1,0 +1,2 @@
+class MainMenuUI:
+    pass
