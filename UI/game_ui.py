@@ -9,10 +9,10 @@ from Models.spawn_side import SpawnSide
 class GameUI:
     CENTER_LINE_WIDTH = 10
     CENTER_LINE_COLOR = Colors.BLACK
-    CENTER_LINE = pygame.Rect(left = (MainWindow.WIDTH/2 - CENTER_LINE_WIDTH/2),
-                              top = 0,
-                              width = CENTER_LINE_WIDTH,
-                              height = MainWindow.HEIGHT)
+    CENTER_LINE = pygame.Rect((MainWindow.WIDTH/2 - CENTER_LINE_WIDTH/2),
+                              0,
+                              CENTER_LINE_WIDTH,
+                              MainWindow.HEIGHT)
     
     def __init__(self, pyg: pygame, ships: list[Ship]) -> None:
         self.__pyg = pyg

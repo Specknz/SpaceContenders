@@ -6,6 +6,7 @@ from UI.game_ui import GameUI
 from Settings.colors import Colors
 from Settings.control_schemes import ControlSchemes
 from Settings.settings_manager import SettingsManager
+from UI.main_window import MainWindow
 
 
 class ShipFactory:
@@ -47,11 +48,11 @@ class ShipFactory:
     
         
     def __get_spawn_x_loc(self, x_pos_of_window):
-        return (GameUI.WIN_WIDTH*x_pos_of_window) - (Ship.HEIGHT/2)
+        return (MainWindow.WIDTH*x_pos_of_window) - (Ship.HEIGHT/2)
     
     
     def __get_spawn_y_loc(self, total_num_of_ships):
-        return (GameUI.WIN_HEIGHT/total_num_of_ships) - (Ship.WIDTH/2)
+        return (MainWindow.HEIGHT/total_num_of_ships) - (Ship.WIDTH/2)
         
         
     def __load_ship_sprite(self, image_path: str, rotation: int) -> pygame.Surface:
