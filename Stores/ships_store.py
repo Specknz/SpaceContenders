@@ -8,6 +8,7 @@ class ShipsStore:
         pass
         
     def store_ships(self, ship_factory: Callable[[], list[Ship]]):
+        self.clear_ships()
         self.ships = ship_factory()
         
         

@@ -1,32 +1,35 @@
 import pygame
-from UI.game_ui import GameUI
 from Models.ship import Ship
 from Models.bullet import Bullet
+from Views.game_view import GameView
 from dataclasses import dataclass, field
-from UI.main_window import MainWindow
-import Helpers.event_helper as EventsHelper
+from Windows.main_window import MainWindow
 import Services.ship_shoot_service as ShipShootService
+from Handlers.event_handler_base import EventHandlerBase
 import Services.ship_movement_service as ShipMovementService
 
 
 @dataclass
-class GameEventHandler():
+class GameEventHandler(EventHandlerBase):
     pyg: pygame
-    ui: GameUI
+    ui: GameView
     ships: list[Ship] = field(default_factory = list)
     game_running = True
-
+    
+    
     def handle_events(self):
         
         for event in self.pyg.event.get():
             
-            EventsHelper.handle_quit(self.pyg, event.type)
-            EventsHelper.handle_return(self.pyg, event, self.game_running)    
+            self.handle_quit(self.pyg, event.type)
+            if self.escape_pressed(self.pyg, event):
+                self.game_running = False
             
-            if EventsHelper.key_pressed(self.pyg, event.type):
+            if self.key_pressed(self.pyg, event.type):
                 self.__ship_shots(event.key)
                  
-        self.__movement()
+        self.__ship_movement()
+        self.__bullet_movement()
         self.__bullet_collision()
         
         if self.__ship_health_zero():
@@ -44,12 +47,16 @@ class GameEventHandler():
         return key == ship.control_scheme["SHOOT"]
 
 
-    def __movement(self):
+    def __ship_movement(self):
         for ship in self.ships:
             ShipMovementService.move(ship, self.pyg.key.get_pressed())  
+            
+                                        
+    def __bullet_movement(self):
+        for ship in self.ships:
             for bullet in ship.shot_bullets:
                 bullet.move(ship.spawn_side)
-                         
+    
     
     def __bullet_collision(self):
         for bullet_owner in self.ships:

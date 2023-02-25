@@ -2,11 +2,10 @@ import os
 import pygame
 from Models.ship import Ship
 from Models.spawn_side import SpawnSide
-from UI.game_ui import GameUI
 from Settings.colors import Colors
 from Settings.control_schemes import ControlSchemes
 from Settings.settings_manager import SettingsManager
-from UI.main_window import MainWindow
+from Windows.main_window import MainWindow
 
 
 class ShipFactory:

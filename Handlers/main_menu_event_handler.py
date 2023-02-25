@@ -1,12 +1,12 @@
 import pygame
 from dataclasses import dataclass
-from UI.main_menu_ui import MainMenuUI
-import Helpers.event_helper as EventsHelper
+from Views.main_menu_view import MainMenuView
+from Handlers.event_handler_base import EventHandlerBase
 
 @dataclass
-class MainMenuEventHandler:
+class MainMenuEventHandler(EventHandlerBase):
     pyg: pygame
-    ui: MainMenuUI
+    view: MainMenuView
     game_clicked = False 
     in_menu = True
     
@@ -14,16 +14,16 @@ class MainMenuEventHandler:
         mouse_pos = pygame.mouse.get_pos()
         
         for event in self.pyg.event.get():
-            if EventsHelper.quit_pressed(self.pyg, event.type):
-                self.pyg.quit()
-            if EventsHelper.key_pressed(self.pyg, event.type):
-                if EventsHelper.escape_pressed(self.pyg, event.key):
-                    return False
-            if EventsHelper.mouse_click(self.pyg, event.type):
-                if event.button == 1 and self.ui.game_button.collidepoint(mouse_pos):
-                    self.game_clicked = True
-                if event.button == 1 and self.ui.quit_button.collidepoint(mouse_pos):
-                    self.in_menu = False
-        return True
-
+            
+            self.handle_quit(self.pyg, event.type)
+            if self.escape_pressed(self.pyg, event):
+                self.in_menu = False
                 
+            if self.mouse_click(self.pyg, event.type):
+                if event.button == 1 and self.view.game_button.rect.collidepoint(mouse_pos):
+                    self.game_clicked = True
+                if event.button == 1 and self.view.quit_button.rect.collidepoint(mouse_pos):
+                    self.in_menu = False
+                    
+        return True
+       

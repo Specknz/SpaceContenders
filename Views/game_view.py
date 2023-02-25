@@ -2,11 +2,11 @@ import os
 import pygame
 from Models.ship import Ship
 from Settings.colors import Colors
-from UI.main_window import MainWindow
+from Windows.main_window import MainWindow
 from Models.spawn_side import SpawnSide
 
 
-class GameUI:
+class GameView:
     CENTER_LINE_WIDTH = 10
     CENTER_LINE_COLOR = Colors.BLACK
     CENTER_LINE = pygame.Rect((MainWindow.WIDTH/2 - CENTER_LINE_WIDTH/2),
@@ -18,8 +18,7 @@ class GameUI:
         self.__pyg = pyg
         self.__ships = ships
         self.__background = self.__load_background()
-        self.__health_font = pyg.font.SysFont('Arial', 20)
-        self.__winner_font = pyg.font.SysFont('Arial', 20)
+        self.__font = self.__pyg.font.Font('Fonts/induction/Induction.otf', 15)
         
     
     def draw(self) -> None:
@@ -33,7 +32,7 @@ class GameUI:
         
     
     def draw_winner_text(self, winner_text: str) -> None:
-        draw_text = self.__winner_font.render(winner_text, 1, Colors.WHITE)
+        draw_text = self.__font.render(winner_text, 1, Colors.WHITE)
         MainWindow.SURFACE.blit(draw_text, 
                           (MainWindow.WIDTH/2 - draw_text.get_width() / 2, 
                            MainWindow.HEIGHT/2 - draw_text.get_height() / 2)
@@ -73,7 +72,7 @@ class GameUI:
             
     def __draw_ship_health(self) -> None:
         for ship in self.__ships:
-            health_text = self.__health_font.render(f"{ship.color_text} Health: {ship.health}", 
+            health_text = self.__font.render(f"Health: {ship.health}", 
                                                     1, 
                                                     ship.color_value)
             if ship.spawn_side == SpawnSide.Left:
