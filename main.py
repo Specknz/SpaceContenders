@@ -49,8 +49,8 @@ def main_menu(pyg: pygame, settings: SettingsManager, ship_store: ShipsStore, sh
     
 
 
-def game_setup_menu(pyg: pygame, settings: SettingsManager, clock: pygame.time.Clock):
-    pass
+# def game_setup_menu(pyg: pygame, settings: SettingsManager, clock: pygame.time.Clock):
+#     pass
         
 
 def game(pyg: pygame, settings: SettingsManager, ships_store: ShipsStore, clock: pygame.time.Clock):
