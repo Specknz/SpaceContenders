@@ -1,10 +1,11 @@
 import pygame
 from dataclasses import dataclass
+from Handlers.ievent_handler import IEventHandler
 from Views.main_menu_view import MainMenuView
 from Handlers.event_handler_base import EventHandlerBase
 
 @dataclass
-class MainMenuEventHandler(EventHandlerBase):
+class MainMenuEventHandler(IEventHandler, EventHandlerBase):
     pyg: pygame
     view: MainMenuView
     game_clicked = False 

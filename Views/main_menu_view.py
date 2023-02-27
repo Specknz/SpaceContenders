@@ -1,9 +1,10 @@
 import pygame
+from Views.iview import IView
 from Models.button import Button
 from Windows.main_window import MainWindow
 
 
-class MainMenuView:
+class MainMenuView(IView):
     
 
     def __init__(self, pyg: pygame) -> None:

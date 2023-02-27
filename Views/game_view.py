@@ -2,11 +2,12 @@ import os
 import pygame
 from Models.ship import Ship
 from Settings.colors import Colors
+from Views.iview import IView
 from Windows.main_window import MainWindow
 from Models.spawn_side import SpawnSide
 
 
-class GameView:
+class GameView(IView):
     CENTER_LINE_WIDTH = 10
     CENTER_LINE_COLOR = Colors.BLACK
     CENTER_LINE = pygame.Rect((MainWindow.WIDTH/2 - CENTER_LINE_WIDTH/2),

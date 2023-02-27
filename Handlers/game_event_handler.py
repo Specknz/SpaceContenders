@@ -1,18 +1,17 @@
 import pygame
 from Models.ship import Ship
 from Models.bullet import Bullet
-from Views.game_view import GameView
 from dataclasses import dataclass, field
 from Windows.main_window import MainWindow
-import Services.ship_shoot_service as ShipShootService
+from Handlers.ievent_handler import IEventHandler
 from Handlers.event_handler_base import EventHandlerBase
+import Services.ship_shoot_service as ShipShootService
 import Services.ship_movement_service as ShipMovementService
 
 
 @dataclass
-class GameEventHandler(EventHandlerBase):
+class GameEventHandler(IEventHandler, EventHandlerBase):
     pyg: pygame
-    ui: GameView
     ships: list[Ship] = field(default_factory = list)
     game_running = True
     
@@ -82,14 +81,6 @@ class GameEventHandler(EventHandlerBase):
     def __ship_health_zero(self):
         for ship in self.ships:
             if ship.health <= 0:
-                # self.__handle_win(ship)
                 return True
-            
-            
-    def __handle_win(self, ship: Ship):
-        losing_side = ship.spawn_side
-        winning_ships = " ".join([str(ship) for ship in self.ships if ship.spawn_side != losing_side]) 
-        win_text = winning_ships + " win the match!"
-        self.ui.draw_winner_text(win_text)
-        
+     
         

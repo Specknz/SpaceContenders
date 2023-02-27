@@ -31,12 +31,12 @@ def main():
 def main_menu(pyg: pygame, settings: SettingsManager, ship_store: ShipsStore, ship_factory: ShipFactory, clock: pygame.time.Clock):
     MainWindow.SURFACE.fill((0,0,0))
     
-    ui = MainMenuView(pyg)
-    event_handler = MainMenuEventHandler(pyg, ui)
+    view = MainMenuView(pyg)
+    event_handler = MainMenuEventHandler(pyg, view)
     
-    while event_handler.in_menu:
+    while event_handler.loop_running:
         event_handler.game_clicked = False
-        ui.draw()
+        view.draw()
         event_handler.handle_events()
         
         if event_handler.game_clicked:
