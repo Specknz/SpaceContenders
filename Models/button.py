@@ -14,7 +14,7 @@ class Button():
         self.y = y - (self.HEIGHT / 2)
         self.text = text
         self.rect = pygame.Rect(self.x, self.y, self.WIDTH, self.HEIGHT)
-        self.font = pygame.font.Font('Fonts/induction/Induction.otf', 20)
+        self.font = pygame.font.Font('Assets/Fonts/induction/Induction.otf', 20)
         self.main_surface = main_surface
 
 

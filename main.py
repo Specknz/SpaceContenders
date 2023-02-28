@@ -1,13 +1,11 @@
 import pygame
 import logging
+
+from Factories.state_factory import StateFactory
 from Factories.ship_factory import ShipFactory
-from Handlers.main_menu_event_handler import MainMenuEventHandler
-from Views.game_view import GameView
-from Views.main_menu_view import MainMenuView
-from Handlers.game_event_handler import GameEventHandler
-from Stores.ships_store import ShipsStore
+from Stores.state_store import StateStore
 from Settings.settings_manager import SettingsManager
-from Windows.main_window import MainWindow
+from Stores.ships_store import ShipsStore
 
 
 def main():
@@ -19,33 +17,37 @@ def main():
     pyg.mixer.init()
     pyg.display.set_caption("Space Contenders")
     clock = pyg.time.Clock()
-    
     settings = SettingsManager()
     
-    ships_factory = ShipFactory(settings)
-    ship_store = ShipsStore()
+    state_factory = StateFactory(pyg, clock, settings)
+    state_store = StateStore(state_factory.create_main_menu_state())
     
-    main_menu(pyg, settings, ship_store, ships_factory, clock)
+    
+    while True:
+        state_store.current_state.run()
+    
+    
+    # main_menu(pyg, settings, ship_store, ships_factory, clock)
 
     
-def main_menu(pyg: pygame, settings: SettingsManager, ship_store: ShipsStore, ship_factory: ShipFactory, clock: pygame.time.Clock):
-    MainWindow.SURFACE.fill((0,0,0))
+# def main_menu(pyg: pygame, settings: SettingsManager, ship_store: ShipsStore, ship_factory: ShipFactory, clock: pygame.time.Clock):
+#     MainWindow.SURFACE.fill((0,0,0))
     
-    view = MainMenuView(pyg)
-    event_handler = MainMenuEventHandler(pyg, view)
+#     view = MainMenuView(pyg)
+#     event_handler = MainMenuEventHandler(pyg, view)
     
-    while event_handler.loop_running:
-        event_handler.game_clicked = False
-        view.draw()
-        event_handler.handle_events()
+#     while event_handler.loop_running:
+#         event_handler.game_clicked = False
+#         view.draw()
+#         event_handler.handle_events()
         
-        if event_handler.game_clicked:
-            ship_store.store_ships(ship_factory.create_1v1_ships)
-            game(pyg, settings, ship_store, clock)
+#         if event_handler.game_clicked:
+#             ship_store.store_ships(ship_factory.create_1v1_ships)
+#             game(pyg, settings, ship_store, clock)
             
-        clock.tick(settings.fps)
+#         clock.tick(settings.fps)
         
-    MainWindow.SURFACE.fill((0,0,0))
+#     MainWindow.SURFACE.fill((0,0,0))
     
 
 
@@ -53,21 +55,21 @@ def main_menu(pyg: pygame, settings: SettingsManager, ship_store: ShipsStore, sh
 #     pass
         
 
-def game(pyg: pygame, settings: SettingsManager, ships_store: ShipsStore, clock: pygame.time.Clock):
-    MainWindow.SURFACE.fill((0,0,0))
-    ui = GameView(pyg, ships_store.ships)
-    event_handler = GameEventHandler(pyg, ui, ships_store.ships)
+# def game(pyg: pygame, settings: SettingsManager, ships_store: ShipsStore, clock: pygame.time.Clock):
+#     MainWindow.SURFACE.fill((0,0,0))
+#     ui = GameView(pyg, ships_store.ships)
+#     event_handler = GameEventHandler(pyg, ui, ships_store.ships)
 
-    while event_handler.game_running:
-        ui.draw() 
-        event_handler.handle_events()
-        clock.tick(settings.fps)
+#     while event_handler.game_running:
+#         ui.draw() 
+#         event_handler.handle_events()
+#         clock.tick(settings.fps)
         
-    MainWindow.SURFACE.fill((0,0,0))
+#     MainWindow.SURFACE.fill((0,0,0))
         
         
-def options_menu():
-    pass
+# def options_menu():
+#     pass
     
     
 def setup_logger():

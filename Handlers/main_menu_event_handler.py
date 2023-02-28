@@ -1,15 +1,15 @@
 import pygame
+
 from dataclasses import dataclass
-from Handlers.ievent_handler import IEventHandler
 from Views.main_menu_view import MainMenuView
+from Handlers.ievent_handler import IEventHandler
 from Handlers.event_handler_base import EventHandlerBase
 
 @dataclass
 class MainMenuEventHandler(IEventHandler, EventHandlerBase):
     pyg: pygame
     view: MainMenuView
-    game_clicked = False 
-    in_menu = True
+    running = True
     
     def handle_events(self):
         mouse_pos = pygame.mouse.get_pos()
