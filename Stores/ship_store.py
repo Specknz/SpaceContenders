@@ -2,16 +2,16 @@ import logging
 from typing import Callable
 from Models.ship import Ship
 
-class ShipsStore:
+class ShipStore:
     def __init__(self):
         self.ships = []
         pass
         
-    def store_ships(self, ship_factory: Callable[[], list[Ship]]):
-        self.clear_ships()
+    def store(self, ship_factory: Callable[[], list[Ship]]):
+        self.clear()
         self.ships = ship_factory()
         
         
-    def clear_ships(self):
+    def clear(self):
         self.ships = []
            

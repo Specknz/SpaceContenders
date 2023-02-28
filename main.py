@@ -1,11 +1,12 @@
 import pygame
 import logging
-
-from Factories.state_factory import StateFactory
 from Factories.ship_factory import ShipFactory
+from Services.state_service import StateService
+from Stores.ship_store import ShipStore
+
 from Stores.state_store import StateStore
+from Factories.state_factory import StateFactory
 from Settings.settings_manager import SettingsManager
-from Stores.ships_store import ShipsStore
 
 
 def main():
@@ -19,12 +20,16 @@ def main():
     clock = pyg.time.Clock()
     settings = SettingsManager()
     
-    state_factory = StateFactory(pyg, clock, settings)
-    state_store = StateStore(state_factory.create_main_menu_state())
-    
-    
+    ship_factory = ShipFactory(settings)
+    ship_store = ShipStore()
+    ship_store.store(ship_factory.create_1v1_ships)
+    state_store = StateStore()
+    state_service = StateService(state_store)
+    state_factory = StateFactory(pyg, clock, settings, state_service, ship_store)
+    state_store.Update(state_factory.create_main_menu_state())
+      
     while True:
-        state_store.current_state.run()
+        state_store.RunCurrentState()
     
     
     # main_menu(pyg, settings, ship_store, ships_factory, clock)

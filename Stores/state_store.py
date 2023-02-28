@@ -3,8 +3,11 @@ from States.istate import IState
 
 class StateStore:
     
-    def __init__(self, initial_state: IState):
-        self.current_state: IState = initial_state
+    def __init__(self):
+        self.__current_state: IState
     
-    def UpdateState(self, new_state: IState):
-        self.current_state = new_state
+    def Update(self, new_state: IState):
+        self.__current_state = new_state
+        
+    def RunCurrentState(self):
+        self.__current_state.run()

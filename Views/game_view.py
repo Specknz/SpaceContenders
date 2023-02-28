@@ -19,7 +19,7 @@ class GameView(IView):
         self.__pyg = pyg
         self.__ships = ships
         self.__background = self.__load_background()
-        self.__font = self.__pyg.font.Font('Fonts/induction/Induction.otf', 15)
+        self.__font = self.__pyg.font.Font('Assets/Fonts/induction/Induction.otf', 15)
         
     
     def draw(self) -> None:

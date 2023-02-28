@@ -1,6 +1,8 @@
+from typing import Callable
 import pygame
 
 from dataclasses import dataclass
+from States.istate import IState
 from Views.main_menu_view import MainMenuView
 from Handlers.ievent_handler import IEventHandler
 from Handlers.event_handler_base import EventHandlerBase
@@ -9,6 +11,7 @@ from Handlers.event_handler_base import EventHandlerBase
 class MainMenuEventHandler(IEventHandler, EventHandlerBase):
     pyg: pygame
     view: MainMenuView
+    change_to_game_state: Callable[[IState], None]
     running = True
     
     def handle_events(self):
@@ -18,13 +21,18 @@ class MainMenuEventHandler(IEventHandler, EventHandlerBase):
             
             self.handle_quit(self.pyg, event.type)
             if self.escape_pressed(self.pyg, event):
-                self.in_menu = False
+                self.running = False
+                exit()
                 
             if self.mouse_click(self.pyg, event.type):
                 if event.button == 1 and self.view.game_button.rect.collidepoint(mouse_pos):
-                    self.game_clicked = True
+                    self.running = False
+                    self.change_to_game_state()
+                    return
+                    
                 if event.button == 1 and self.view.quit_button.rect.collidepoint(mouse_pos):
-                    self.in_menu = False
+                    self.running = False
+                    exit()
                     
         return True
        
