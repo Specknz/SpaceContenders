@@ -1,5 +1,4 @@
 import logging
-from typing import Callable
 from Models.ship import Ship
 
 class ShipStore:
@@ -7,9 +6,9 @@ class ShipStore:
         self.ships = []
         pass
         
-    def store(self, ship_factory: Callable[[], list[Ship]]):
+    def store(self, ships: list[Ship]):
         self.clear()
-        self.ships = ship_factory()
+        self.ships = ships
         
         
     def clear(self):

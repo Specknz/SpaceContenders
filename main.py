@@ -22,7 +22,7 @@ def main():
     ship_store = ShipStore()
     state_store = StateStore()
     ship_factory = ShipFactory(settings)
-    ship_store.store(ship_factory.create_1v1_ships)
+    ship_store.store(ship_factory.create_1v1_ships())
     state_factory = StateFactory(pyg, clock, settings, ship_store, state_store)
     state_store.update(state_factory.create_main_menu_state())
       
