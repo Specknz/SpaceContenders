@@ -1,13 +1,14 @@
+from Stores.istore import IStore
 from States.istate import IState
 
 
-class StateStore:
+class StateStore(IStore):
     
     def __init__(self):
-        self.__current_state: IState
+        self.current_state: IState
     
-    def Update(self, new_state: IState):
-        self.__current_state = new_state
+    def update(self, new_state: IState):
+        self.current_state = new_state
         
-    def RunCurrentState(self):
-        self.__current_state.run()
+    def run_current_state(self):
+        self.current_state.run()

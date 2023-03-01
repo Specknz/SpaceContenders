@@ -11,7 +11,8 @@ from Handlers.event_handler_base import EventHandlerBase
 class MainMenuEventHandler(IEventHandler, EventHandlerBase):
     pyg: pygame
     view: MainMenuView
-    change_to_game_state: Callable[[IState], None]
+    game_state_factory: Callable[[], IState]
+    update_state_store: Callable[[IState], None]
     running = True
     
     def handle_events(self):
@@ -27,7 +28,7 @@ class MainMenuEventHandler(IEventHandler, EventHandlerBase):
             if self.mouse_click(self.pyg, event.type):
                 if event.button == 1 and self.view.game_button.rect.collidepoint(mouse_pos):
                     self.running = False
-                    self.change_to_game_state()
+                    self.update_state_store(self.game_state_factory())
                     return
                     
                 if event.button == 1 and self.view.quit_button.rect.collidepoint(mouse_pos):

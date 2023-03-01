@@ -13,7 +13,7 @@ import Services.ship_movement_service as ShipMovementService
 class GameEventHandler(IEventHandler, EventHandlerBase):
     pyg: pygame
     ships: list[Ship] = field(default_factory = list)
-    game_running = True
+    running = True
     
     
     def handle_events(self):
@@ -22,7 +22,7 @@ class GameEventHandler(IEventHandler, EventHandlerBase):
             
             self.handle_quit(self.pyg, event.type)
             if self.escape_pressed(self.pyg, event):
-                self.game_running = False
+                self.running = False
             
             if self.key_pressed(self.pyg, event.type):
                 self.__ship_shots(event.key)
@@ -32,7 +32,7 @@ class GameEventHandler(IEventHandler, EventHandlerBase):
         self.__bullet_collision()
         
         if self.__ship_health_zero():
-            self.game_running = False
+            self.running = False
             return
 
 

@@ -7,5 +7,5 @@ class IState(ABC):
     event_handler: IEventHandler
     
     @abstractmethod
-    def run():
+    def run(self):
         ...
