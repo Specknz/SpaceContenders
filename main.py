@@ -20,7 +20,7 @@ def main():
     state_store = StateStore()
     state_factory = StateFactory(pyg, 
                                  clock, 
-                                 settings, 
+                                 settings,
                                  state_store)
     state_store.update(state_factory.main_menu())
       

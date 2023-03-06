@@ -1,6 +1,7 @@
-from dataclasses import dataclass, field
 import logging
 import pygame
+
+from dataclasses import dataclass, field
 from Models.bullet import Bullet
 from Models.spawn_side import SpawnSide
 
