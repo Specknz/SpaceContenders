@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class IButton(ABC):
-    WIDTH = 180
+    WIDTH = 200
     HEIGHT = 70
     
     @abstractmethod
