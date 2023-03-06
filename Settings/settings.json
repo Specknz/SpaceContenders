@@ -1,4 +1,5 @@
 {
     "FPS": 60,
-    "ShipHealth": 5
+    "ShipHealth": 5,
+    "FontPath": "Assets/Fonts/induction/Induction.otf"
 }

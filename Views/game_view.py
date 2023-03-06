@@ -14,20 +14,21 @@ class GameView(IView):
                               0,
                               CENTER_LINE_WIDTH,
                               MainWindow.HEIGHT)
+    
+    FONT_SIZE = 15
 
-    def __init__(self, pyg: pygame, ships: list[Ship]) -> None:
+    def __init__(self, pyg: pygame, ships: list[Ship], font_path: str) -> None:
         self.pyg = pyg
         self.ships = ships
         self.background = self.__load_background()
-        self.font = self.pyg.font.Font(
-            'Assets/Fonts/induction/Induction.otf', 15)
+        self.font = self.pyg.font.Font(font_path, self.FONT_SIZE)
 
     def draw(self) -> None:
-        self.__draw_background()
-        self.__draw_center_line()
-        self.__draw_bullets()
-        self.__draw_ships()
-        self.__draw_ship_health()
+        self.__background()
+        self.__center_line()
+        self.__bullets()
+        self.__ships()
+        self.__ship_health_text()
 
         self.pyg.display.update()
 
@@ -35,16 +36,16 @@ class GameView(IView):
         return self.pyg.transform.scale(self.pyg.image.load(os.path.join('Assets', 'space.png')),
                                         (MainWindow.WIDTH, MainWindow.HEIGHT))
 
-    def __draw_background(self) -> None:
+    def __background(self) -> None:
         MainWindow.SURFACE.blit(self.background, (0, 0))
 
-    def __draw_center_line(self) -> None:
+    def __center_line(self) -> None:
         self.pyg.draw.rect(
             surface=MainWindow.SURFACE,
             color=self.CENTER_LINE_COLOR,
             rect=self.CENTER_LINE)
 
-    def __draw_bullets(self) -> None:
+    def __bullets(self) -> None:
         for ship in self.ships:
             for bullet in ship.shot_bullets:
                 self.pyg.draw.rect(
@@ -52,14 +53,14 @@ class GameView(IView):
                     color=ship.color_value,
                     rect=bullet)
 
-    def __draw_ships(self) -> None:
+    def __ships(self) -> None:
         for ship in self.ships:
             MainWindow.SURFACE.blit(ship.sprite, (ship.rect.x, ship.rect.y))
 
-    def __draw_ship_health(self) -> None:
+    def __ship_health_text(self) -> None:
         for ship in self.ships:
             health_text = self.font.render(f"Health: {ship.health}",
-                                           1,
+                                           True,
                                            ship.color_value)
             if ship.spawn_side == SpawnSide.Left:
                 MainWindow.SURFACE.blit(health_text, (10, 10))

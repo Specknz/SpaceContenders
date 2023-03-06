@@ -18,6 +18,8 @@ class GameEventHandler(IEventHandler, EventHandlerBase):
     ships: list[Ship] = field(default_factory=list)
     update_state_store_func: Callable[[IState], None] = field(default_factory = Callable)
     game_state_factory_func: Callable[[], IState] = field(default_factory = Callable)
+    update_winning_ship_func: Callable[[Ship], None] = field(default_factory = Callable)
+    winning_ship = None
     running = True
 
     def handle_events(self):
@@ -36,8 +38,8 @@ class GameEventHandler(IEventHandler, EventHandlerBase):
         self.__bullet_collision()
 
         if self.__ship_health_zero():
-            self.running = False
-            self.update_state_store_func(self.game_state_factory_func())
+            self.__set_winning_ship()
+            self.__handle_game_end()
             return
 
     def __ship_shots(self, event_key) -> None:
@@ -80,3 +82,13 @@ class GameEventHandler(IEventHandler, EventHandlerBase):
         for ship in self.ships:
             if ship.health <= 0:
                 return True
+
+    def __set_winning_ship(self):
+        for ship in self.ships:
+            if ship.health > 0:
+                self.winning_ship = ship
+
+    def __handle_game_end(self):
+        self.running = False
+        self.update_winning_ship_func(self.winning_ship)
+        self.update_state_store_func(self.game_state_factory_func())

@@ -8,7 +8,7 @@ from Factories.button_factory import ButtonFactory
 
 class MainMenuView(IView):
 
-    def __init__(self, pyg: pygame) -> None:
+    def __init__(self, pyg: pygame, font_path: str) -> None:
         self.pyg = pyg
         
         self.game_button: IButton = ButtonFactory \

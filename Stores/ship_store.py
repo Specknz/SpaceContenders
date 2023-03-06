@@ -8,10 +8,10 @@ class ShipStore(IStore):
         pass
         
     def update(self, ships: list[Ship]):
-        self.clear()
+        self.__clear()
         self.ships = ships
               
-    def clear(self):
+    def __clear(self):
         self.ships = []
     
     def get_stored_item(self) -> list[Ship]:
