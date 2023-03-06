@@ -9,7 +9,7 @@ from Settings.settings_manager import SettingsManager
 
 
 @dataclass
-class MainMenuState(IState):
+class State(IState):
     pyg: pygame
     clock: pygame.time.Clock
     settings: SettingsManager

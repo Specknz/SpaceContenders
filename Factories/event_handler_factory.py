@@ -1,20 +1,34 @@
 import pygame
 
 from typing import Callable
+from Models.ship import Ship
+from Views.iview import IView
+from States.istate import IState
+from dataclasses import dataclass, field
 from Handlers.game_event_handler import GameEventHandler
 from Handlers.main_menu_event_handler import MainMenuEventHandler
-from Models.ship import Ship
-from States.istate import IState
-from Views.main_menu_view import MainMenuView
+from Handlers.game_finish_event_handler import GameFinishEventHandler
 
 
+@dataclass
+class EventHandlerFactory:
+    pyg: pygame
+    update_state_store_func: Callable[[IState], None] = field(default_factory=Callable)
 
-def create_main_menu_event_handler(pyg: pygame, 
-                                   view: MainMenuView,
-                                   game_state_factory: Callable[[], IState],
-                                   update_state_func: Callable[[IState], None]):
-    return MainMenuEventHandler(pyg, view, game_state_factory, update_state_func)
+    def main_menu(self, view: IView, game_state_factory_func: Callable[[], IState]):
+        return MainMenuEventHandler(self.pyg,
+                                    view,
+                                    self.update_state_store_func,
+                                    game_state_factory_func)
 
+    def game(self, ships: list[Ship], game_finish_state_factory_func: Callable[[], IState]):
+        return GameEventHandler(self.pyg,
+                                ships,
+                                self.update_state_store_func,
+                                game_finish_state_factory_func)
 
-def create_game_event_handler(pyg: pygame, ships: list[Ship]):
-    return GameEventHandler(pyg, ships)
+    def game_finish(self, view: IView, main_menu_state_factory_func: Callable[[], IState]):
+        return GameFinishEventHandler(self.pyg,
+                                      view,
+                                      self.update_state_store_func,
+                                      main_menu_state_factory_func)

@@ -12,3 +12,6 @@ class StateStore(IStore):
         
     def run_current_state(self):
         self.current_state.run()
+        
+    def get_stored_item(self) -> IState:
+        return self.current_state

@@ -1,5 +1,5 @@
-from enum import Enum
+from enum import Enum, auto
 
 class SpawnSide(Enum):
-    Left = 1
-    Right = 2
+    Left = auto()
+    Right = auto()

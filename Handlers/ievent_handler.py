@@ -8,7 +8,3 @@ class IEventHandler(ABC):
     @abstractmethod
     def handle_events():
         ...
-        
-    # @abstractmethod
-    # def navigate():
-    #     ...

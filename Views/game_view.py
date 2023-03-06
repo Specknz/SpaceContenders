@@ -14,14 +14,14 @@ class GameView(IView):
                               0,
                               CENTER_LINE_WIDTH,
                               MainWindow.HEIGHT)
-    
+
     def __init__(self, pyg: pygame, ships: list[Ship]) -> None:
-        self.__pyg = pyg
-        self.__ships = ships
-        self.__background = self.__load_background()
-        self.__font = self.__pyg.font.Font('Assets/Fonts/induction/Induction.otf', 15)
-        
-    
+        self.pyg = pyg
+        self.ships = ships
+        self.background = self.__load_background()
+        self.font = self.pyg.font.Font(
+            'Assets/Fonts/induction/Induction.otf', 15)
+
     def draw(self) -> None:
         self.__draw_background()
         self.__draw_center_line()
@@ -29,57 +29,41 @@ class GameView(IView):
         self.__draw_ships()
         self.__draw_ship_health()
 
-        self.__pyg.display.update()
-        
-    
-    def draw_winner_text(self, winner_text: str) -> None:
-        draw_text = self.__font.render(winner_text, 1, Colors.WHITE)
-        MainWindow.SURFACE.blit(draw_text, 
-                          (MainWindow.WIDTH/2 - draw_text.get_width() / 2, 
-                           MainWindow.HEIGHT/2 - draw_text.get_height() / 2)
-                          )
-        self.__pyg.display.update()
-        
-      
-    def __load_background(self):
-            return self.__pyg.transform.scale(self.__pyg.image.load(os.path.join('Assets', 'space.png')), 
-                                              (MainWindow.WIDTH, MainWindow.HEIGHT))
-        
-    
-    def __draw_background(self) -> None:
-        MainWindow.SURFACE.blit(self.__background, (0, 0))
-    
-    
-    def __draw_center_line(self) -> None:
-        self.__pyg.draw.rect(
-            surface = MainWindow.SURFACE, 
-            color = self.CENTER_LINE_COLOR, 
-            rect = self.CENTER_LINE)
-    
-    
-    def __draw_bullets(self) -> None:
-            for ship in self.__ships:
-                for bullet in ship.shot_bullets:
-                    self.__pyg.draw.rect(
-                        surface = MainWindow.SURFACE, 
-                        color = ship.color_value, 
-                        rect = bullet)
+        self.pyg.display.update()
 
+    def __load_background(self):
+        return self.pyg.transform.scale(self.pyg.image.load(os.path.join('Assets', 'space.png')),
+                                        (MainWindow.WIDTH, MainWindow.HEIGHT))
+
+    def __draw_background(self) -> None:
+        MainWindow.SURFACE.blit(self.background, (0, 0))
+
+    def __draw_center_line(self) -> None:
+        self.pyg.draw.rect(
+            surface=MainWindow.SURFACE,
+            color=self.CENTER_LINE_COLOR,
+            rect=self.CENTER_LINE)
+
+    def __draw_bullets(self) -> None:
+        for ship in self.ships:
+            for bullet in ship.shot_bullets:
+                self.pyg.draw.rect(
+                    surface=MainWindow.SURFACE,
+                    color=ship.color_value,
+                    rect=bullet)
 
     def __draw_ships(self) -> None:
-        for ship in self.__ships:
+        for ship in self.ships:
             MainWindow.SURFACE.blit(ship.sprite, (ship.rect.x, ship.rect.y))
-            
-            
+
     def __draw_ship_health(self) -> None:
-        for ship in self.__ships:
-            health_text = self.__font.render(f"Health: {ship.health}", 
-                                                    1, 
-                                                    ship.color_value)
+        for ship in self.ships:
+            health_text = self.font.render(f"Health: {ship.health}",
+                                           1,
+                                           ship.color_value)
             if ship.spawn_side == SpawnSide.Left:
                 MainWindow.SURFACE.blit(health_text, (10, 10))
-                
+
             if ship.spawn_side == SpawnSide.Right:
-                MainWindow.SURFACE.blit(health_text, (MainWindow.WIDTH - health_text.get_width() - 10, 10))
-                
-                
+                MainWindow.SURFACE.blit(
+                    health_text, (MainWindow.WIDTH - health_text.get_width() - 10, 10))
