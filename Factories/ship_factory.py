@@ -15,7 +15,6 @@ class ShipFactory:
     
     
     def create_1v1_ships(self) -> list[Ship]:
-
         return [
             self.__create_left_side_ship(),
             self.__create_right_side_ship()
@@ -58,7 +57,7 @@ class ShipFactory:
         sprite_loaded = pygame.image.load(os.path.join('Assets', image_path))
         sprite_scaled = pygame.transform.scale(sprite_loaded, Ship.SIZE)
         sprite_rotated = pygame.transform.rotate(sprite_scaled, rotation)
-
+        
         return sprite_rotated
     
     

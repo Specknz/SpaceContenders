@@ -1,6 +1,7 @@
-from abc import ABC
 import pygame
+import logging
 
+from abc import ABC
 
 class EventHandlerBase(ABC):
     
@@ -9,7 +10,7 @@ class EventHandlerBase(ABC):
             pyg.quit()
             
             
-    def escape_pressed(self, pyg: pygame, event):
+    def check_for_escape_pressed(self, pyg: pygame, event):
         if self.key_pressed(pyg, event.type):
             if self.escape_pressed(pyg, event.key):
                 return True

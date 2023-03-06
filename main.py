@@ -1,9 +1,7 @@
 import pygame
 import logging
 
-from Stores.ship_store import ShipStore
 from Stores.state_store import StateStore
-from Factories.ship_factory import ShipFactory
 from Factories.state_factory import StateFactory
 from Settings.settings_manager import SettingsManager
 

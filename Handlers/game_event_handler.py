@@ -25,7 +25,7 @@ class GameEventHandler(IEventHandler, EventHandlerBase):
         for event in self.pyg.event.get():
 
             self.handle_quit(self.pyg, event.type)
-            if self.escape_pressed(self.pyg, event):
+            if self.check_for_escape_pressed(self.pyg, event):
                 self.running = False
 
             if self.key_pressed(self.pyg, event.type):

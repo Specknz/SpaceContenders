@@ -1,6 +1,7 @@
-from typing import Callable
+import logging
 import pygame
 
+from typing import Callable
 from dataclasses import dataclass
 from States.istate import IState
 from Views.main_menu_view import MainMenuView
@@ -19,9 +20,8 @@ class MainMenuEventHandler(IEventHandler, EventHandlerBase):
         mouse_pos = pygame.mouse.get_pos()
         
         for event in self.pyg.event.get():
-            
             self.handle_quit(self.pyg, event.type)
-            if self.escape_pressed(self.pyg, event):
+            if self.check_for_escape_pressed(self.pyg, event):
                 self.running = False
                 exit()
                 
