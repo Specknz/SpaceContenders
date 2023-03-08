@@ -1,18 +1,18 @@
 import pygame
 
 from dataclasses import dataclass
+from Settings.isettings import ISettings
 from States.state import State
 from States.istate import IState
 from Stores.istore import IStore
 from Factories.ifactory import IFactory
 from Factories.iship_factory import IShipFactory
-from Settings.settings import Settings
 
 @dataclass
 class StateFactory(IFactory):
     pyg: pygame
     clock: pygame.time.Clock
-    settings: Settings
+    settings: ISettings
     ship_store: IStore
     winning_ship_store: IStore
     ship_factory: IShipFactory

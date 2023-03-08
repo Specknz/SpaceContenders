@@ -1,18 +1,19 @@
 import pygame
+
+from dataclasses import dataclass
 from Models.ship import Ship
-from Settings.settings import Settings
-from Views.game_view import GameView
 from Views.iview import IView
+from Views.game_view import GameView
 from Views.main_menu_view import MainMenuView
 from Views.game_finish_view import GameFinishView
+from Settings.isettings import ISettings
 from Factories.ifactory import IFactory
 
 
+@dataclass
 class ViewFactory(IFactory):
-
-    def __init__(self, pyg: pygame, settings: Settings):
-        self.pyg: pygame = pyg
-        self.settings: Settings = settings
+    pyg: pygame
+    settings: ISettings
 
     def main_menu(self) -> IView:
         return MainMenuView(self.pyg, self.settings.font_path)

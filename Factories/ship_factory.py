@@ -1,18 +1,18 @@
 import os
 import pygame
+
+from dataclasses import dataclass
 from Models.ship import Ship
 from Models.spawn_side import SpawnSide
-from Settings.colors import Colors
-from Settings.control_schemes import ControlSchemes
-from Settings.settings import Settings
 from Windows.main_window import MainWindow
+from Settings.colors import Colors
+from Settings.isettings import ISettings
+from Settings.control_schemes import ControlSchemes
 
 
+@dataclass
 class ShipFactory:
-    def __init__(self, settings: Settings) -> None:
-        self.__settings = settings
-        pass
-    
+    settings: ISettings
     
     def create_1v1_ships(self) -> list[Ship]:
         return [
@@ -27,7 +27,7 @@ class ShipFactory:
             color_text = "Yellow",
             color_value = Colors.YELLOW,
             control_scheme = ControlSchemes.LEFT_CONTROLS_1,
-            health = self.__settings.ship_health,
+            health = self.settings.ship_health,
             sprite = self.__load_ship_sprite("ship_yellow.png", rotation = 90),
             rect = self.__load_ship_rect(start_x_loc = self.__get_spawn_x_loc(0.25),
                                          start_y_loc = self.__get_spawn_y_loc(2)))
@@ -39,7 +39,7 @@ class ShipFactory:
             color_text = "Red",
             color_value = Colors.RED,
             control_scheme = ControlSchemes.RIGHT_CONTROLS_1,
-            health = self.__settings.ship_health,
+            health = self.settings.ship_health,
             sprite = self.__load_ship_sprite("ship_red.png", rotation = -90),
             rect = self.__load_ship_rect(start_x_loc = self.__get_spawn_x_loc(0.75),
                                          start_y_loc = self.__get_spawn_y_loc(2)))

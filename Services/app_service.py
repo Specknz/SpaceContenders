@@ -1,21 +1,20 @@
 import pygame
+import Factories.store_factory as StoreFactory
 
+from Factories.app_factory import AppFactory
 from dataclasses import dataclass
 from States.istate import IState
-from Stores.istore import IStore
-from Factories.ifactory import IFactory
-from Settings.isettings import ISettings
 
 
 @dataclass
 class AppService():
     pyg: pygame
     clock: pygame.time.Clock
-    settings: ISettings
-    state_store: IStore
-    state_factory: IFactory
+    app_factory: AppFactory
 
     def setup(self):
+        self.state_store = StoreFactory.state()
+        self.state_factory = self.app_factory.state(self.pyg, self.state_store)
         self.state_store.update(self.state_factory.main_menu())
 
     def run(self):

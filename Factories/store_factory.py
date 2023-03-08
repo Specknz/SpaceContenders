@@ -4,11 +4,11 @@ from Stores.state_store import StateStore
 from Stores.winning_ship_store import WinningShipStore
 
 
-def ship_store() -> IStore:
+def ship() -> IStore:
     return ShipStore()
 
-def state_store() -> IStore:
-    return StateStore()
-
-def winning_ship_store() -> IStore:
+def winning_ship() -> IStore:
     return WinningShipStore()
+
+def state() -> IStore:
+    return StateStore()
