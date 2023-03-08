@@ -9,11 +9,11 @@ class ShipStore(IStore):
         
     def update(self, ships: list[Ship]):
         self.__clear()
-        self.__ships = ships
-              
-    def __clear(self):
-        self.__ships = []
+        self.__ships = ships          
     
     def get_stored_item(self) -> list[Ship]:
         return self.__ships
+    
+    def __clear(self):
+        self.__ships = []
            
