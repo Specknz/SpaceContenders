@@ -1,29 +1,24 @@
-import Factories.store_factory as StoreFactory
-import Factories.settings_factory as SettingsFactory
+from Factories.state_factory import StateFactory
+from Services.app_service import AppService
 
 from Services.logger_setup_service import setup_logger
 from Services.pygame_setup_service import setup_pygame
-from Settings.isettings import ISettings
-from Factories.state_factory import StateFactory
+from Settings.settings import Settings
+from Stores.state_store import StateStore
 
 
 def main():
     setup_logger()
     
     pyg = setup_pygame()
-    
     clock = pyg.time.Clock()
-    settings: ISettings = SettingsFactory.settings()
+    settings = Settings()
+    state_store = StateStore()
+    state_factory: IFactory
     
-    state_store = StoreFactory.state_store()
-    state_factory = StateFactory(pyg, 
-                                 clock, 
-                                 settings,
-                                 state_store)
-    state_store.update(state_factory.main_menu())
-      
-    while True:
-        state_store.run_current_state()
+    app_service = AppService()
+    app_service.setup()
+    app_service.run()
     
 
 if __name__ == "__main__":

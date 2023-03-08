@@ -10,8 +10,5 @@ class StateStore(IStore):
     def update(self, new_state: IState):
         self.current_state = new_state
         
-    def run_current_state(self):
-        self.current_state.run()
-        
     def get_stored_item(self) -> IState:
         return self.current_state

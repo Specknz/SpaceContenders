@@ -7,7 +7,7 @@ from Stores.winning_ship_store import WinningShipStore
 def ship_store() -> IStore:
     return ShipStore()
 
-def state_store() -> StateStore:
+def state_store() -> IStore:
     return StateStore()
 
 def winning_ship_store() -> IStore:
