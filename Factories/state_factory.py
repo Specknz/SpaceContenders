@@ -2,8 +2,8 @@ import pygame
 
 from dataclasses import dataclass
 from Settings.isettings import ISettings
-from States.state import State
-from States.istate import IState
+from Models.state import State
+from Models.istate import IState
 from Stores.istore import IStore
 from Factories.ifactory import IFactory
 from Factories.iship_factory import IShipFactory
@@ -18,22 +18,6 @@ class StateFactory(IFactory):
     ship_factory: IShipFactory
     view_factory: IFactory
     event_handler_factory: IFactory
-    
-    # def __init__(self,
-    #              pyg: pygame,
-    #              clock: pygame.time.Clock,
-    #              settings: SettingsManager,
-    #              state_store: IStore) -> None:
-    #     self.pyg: pygame = pyg
-    #     self.clock: pygame.time.Clock = clock
-    #     self.settings: SettingsManager = settings
-    #     self.state_store: IStore = state_store
-
-        # self.ship_store: IStore = ShipStore()
-        # self.winning_ship_store: IStore = WinningShipStore()
-        # self.ship_factory = ShipFactory(self.settings)
-        # self.view_factory = ViewFactory(self.pyg, self.settings)
-        # self.event_handler_factory = EventHandlerFactory(self.pyg, state_store.update)
 
     def main_menu(self) -> IState:
         view = self.view_factory.main_menu()
