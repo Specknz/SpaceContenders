@@ -1,17 +1,18 @@
 import pygame
 
+from dataclasses import dataclass, field
 from typing import Callable
 from Models.ship import Ship
 from Views.iview import IView
 from States.istate import IState
-from dataclasses import dataclass, field
+from Factories.ifactory import IFactory
 from Handlers.game_event_handler import GameEventHandler
 from Handlers.main_menu_event_handler import MainMenuEventHandler
 from Handlers.game_finish_event_handler import GameFinishEventHandler
 
 
 @dataclass
-class EventHandlerFactory:
+class EventHandlerFactory(IFactory):
     pyg: pygame
     update_state_store_func: Callable[[IState], None] = field(default_factory = Callable)
 

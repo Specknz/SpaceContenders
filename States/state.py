@@ -2,7 +2,7 @@ import pygame
 
 from dataclasses import dataclass
 from Handlers.ievent_handler import IEventHandler
-from Settings.settings_manager import SettingsManager
+from Settings.settings import Settings
 from States.istate import IState
 from Views.iview import IView
 from Windows.main_window import MainWindow
@@ -12,7 +12,7 @@ from Windows.main_window import MainWindow
 class State(IState):
     pyg: pygame
     clock: pygame.time.Clock
-    settings: SettingsManager
+    settings: Settings
     view: IView
     event_handler: IEventHandler
     

@@ -4,12 +4,12 @@ from Models.ship import Ship
 from Models.spawn_side import SpawnSide
 from Settings.colors import Colors
 from Settings.control_schemes import ControlSchemes
-from Settings.settings_manager import SettingsManager
+from Settings.settings import Settings
 from Windows.main_window import MainWindow
 
 
 class ShipFactory:
-    def __init__(self, settings: SettingsManager) -> None:
+    def __init__(self, settings: Settings) -> None:
         self.__settings = settings
         pass
     

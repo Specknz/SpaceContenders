@@ -1,23 +1,21 @@
-import pygame
-import logging
+import Factories.store_factory as StoreFactory
+import Factories.settings_factory as SettingsFactory
 
-from Stores.state_store import StateStore
+from Services.logger_setup_service import setup_logger
+from Services.pygame_setup_service import setup_pygame
+from Settings.isettings import ISettings
 from Factories.state_factory import StateFactory
-from Settings.settings_manager import SettingsManager
 
 
 def main():
     setup_logger()
     
-    pyg = pygame
-    pyg.init()
-    pyg.font.init()
-    pyg.mixer.init()
-    pyg.display.set_caption("Space Contenders")
-    clock = pyg.time.Clock()
-    settings = SettingsManager()
+    pyg = setup_pygame()
     
-    state_store = StateStore()
+    clock = pyg.time.Clock()
+    settings: ISettings = SettingsFactory.settings()
+    
+    state_store = StoreFactory.state_store()
     state_factory = StateFactory(pyg, 
                                  clock, 
                                  settings,
@@ -27,12 +25,6 @@ def main():
     while True:
         state_store.run_current_state()
     
-    
-def setup_logger():
-    logging.basicConfig(level=logging.DEBUG,
-                        format='%(levelname)s:%(asctime)s: %(message)s', 
-                        datefmt="%Y-%m-%d %H:%M:%S")
-    
-    
+
 if __name__ == "__main__":
     main()

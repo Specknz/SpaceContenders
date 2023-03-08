@@ -1,17 +1,18 @@
 import pygame
 from Models.ship import Ship
-from Settings.settings_manager import SettingsManager
+from Settings.settings import Settings
 from Views.game_view import GameView
 from Views.iview import IView
 from Views.main_menu_view import MainMenuView
 from Views.game_finish_view import GameFinishView
+from Factories.ifactory import IFactory
 
 
-class ViewFactory:
+class ViewFactory(IFactory):
 
-    def __init__(self, pyg: pygame, settings: SettingsManager):
+    def __init__(self, pyg: pygame, settings: Settings):
         self.pyg: pygame = pyg
-        self.settings: SettingsManager = settings
+        self.settings: Settings = settings
 
     def main_menu(self) -> IView:
         return MainMenuView(self.pyg, self.settings.font_path)
