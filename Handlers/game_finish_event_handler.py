@@ -2,7 +2,7 @@ import pygame
 
 from typing import Callable
 from dataclasses import dataclass
-from States.istate import IState
+from Models.istate import IState
 from Handlers.ievent_handler import IEventHandler
 from Views.game_finish_view import GameFinishView
 from Handlers.event_handler_base import EventHandlerBase

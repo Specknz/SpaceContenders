@@ -3,9 +3,9 @@ import pygame
 from dataclasses import dataclass
 from typing import Callable
 from Models.ship import Ship
+from Models.istate import IState
 from Stores.istore import IStore
 from Views.iview import IView
-from States.istate import IState
 from Factories.ifactory import IFactory
 from Handlers.game_event_handler import GameEventHandler
 from Handlers.main_menu_event_handler import MainMenuEventHandler

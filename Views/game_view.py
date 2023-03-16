@@ -1,7 +1,7 @@
 import os
 import pygame
 from Models.ship import Ship
-from Settings.colors import Colors
+from Config.colors import Colors
 from Views.iview import IView
 from Windows.main_window import MainWindow
 from Models.spawn_side import SpawnSide

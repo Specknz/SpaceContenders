@@ -3,7 +3,7 @@ import pygame
 from typing import Callable
 from Models.ship import Ship
 from Models.bullet import Bullet
-from States.istate import IState
+from Models.istate import IState
 from dataclasses import dataclass, field
 from Windows.main_window import MainWindow
 from Handlers.ievent_handler import IEventHandler

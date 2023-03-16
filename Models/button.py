@@ -1,6 +1,6 @@
 import pygame
 from Models.ibutton import IButton
-from Settings.colors import Colors
+from Config.colors import Colors
 
 
 class Button(IButton):

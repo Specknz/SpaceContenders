@@ -1,8 +1,5 @@
 from abc import ABC, abstractmethod
 
-from States.istate import IState
-
-
 class IStore(ABC):
     
     @abstractmethod

@@ -1,6 +1,6 @@
 import json
 
-from Settings.isettings import ISettings
+from Config.isettings import ISettings
 
 
 class Settings(ISettings):
@@ -14,5 +14,5 @@ class Settings(ISettings):
         
         
     def __load_settings(self):
-        with open("Settings\settings.json") as settings:
+        with open("Config\settings.json") as settings:
             return json.load(settings)

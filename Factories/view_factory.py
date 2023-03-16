@@ -6,7 +6,7 @@ from Views.iview import IView
 from Views.game_view import GameView
 from Views.main_menu_view import MainMenuView
 from Views.game_finish_view import GameFinishView
-from Settings.isettings import ISettings
+from Config.isettings import ISettings
 from Factories.ifactory import IFactory
 
 

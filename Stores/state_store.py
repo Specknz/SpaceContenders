@@ -1,5 +1,5 @@
 from Stores.istore import IStore
-from States.istate import IState
+from Models.istate import IState
 
 
 class StateStore(IStore):

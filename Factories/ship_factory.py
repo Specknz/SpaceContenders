@@ -5,9 +5,9 @@ from dataclasses import dataclass
 from Models.ship import Ship
 from Models.spawn_side import SpawnSide
 from Windows.main_window import MainWindow
-from Settings.colors import Colors
-from Settings.isettings import ISettings
-from Settings.control_schemes import ControlSchemes
+from Config.colors import Colors
+from Config.isettings import ISettings
+from Config.control_schemes import ControlSchemes
 
 
 @dataclass

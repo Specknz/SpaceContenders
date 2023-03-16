@@ -2,7 +2,7 @@ import pygame
 
 from dataclasses import dataclass
 from Handlers.ievent_handler import IEventHandler
-from Settings.isettings import ISettings
+from Config.isettings import ISettings
 from Models.istate import IState
 from Views.iview import IView
 from Windows.main_window import MainWindow

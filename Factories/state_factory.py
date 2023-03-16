@@ -1,7 +1,7 @@
 import pygame
 
 from dataclasses import dataclass
-from Settings.isettings import ISettings
+from Config.isettings import ISettings
 from Models.state import State
 from Models.istate import IState
 from Stores.istore import IStore

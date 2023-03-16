@@ -3,7 +3,7 @@ import Factories.store_factory as StoreFactory
 
 from Factories.app_factory import AppFactory
 from dataclasses import dataclass
-from States.istate import IState
+from Models.istate import IState
 
 
 @dataclass
