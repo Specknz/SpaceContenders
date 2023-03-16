@@ -9,7 +9,7 @@ from Factories.button_factory import ButtonFactory
 
 
 class GameFinishView(IView):
-    WINNING_FONT_SIZE = 25
+    WINNING_FONT_SIZE = 35
 
     def __init__(self, pyg: pygame, winning_ship: Ship, font_path: str) -> None:
         self.pyg = pyg
@@ -54,5 +54,5 @@ class GameFinishView(IView):
         
     def __ship(self):
         MainWindow.SURFACE.blit(self.winning_ship.sprite, 
-                                (MainWindow.WIDTH/2 - self.winning_ship.WIDTH/2, 
-                                 MainWindow.HEIGHT/2 - self.winning_ship.HEIGHT/2 - 50))
+                                (MainWindow.WIDTH/2 - self.winning_ship.HEIGHT/2, 
+                                 MainWindow.HEIGHT/2 - self.winning_ship.WIDTH/2 - 100))

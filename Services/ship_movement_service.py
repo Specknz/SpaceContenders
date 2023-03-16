@@ -22,7 +22,7 @@ def move(ship: Ship, keys_pressed):
 def __move_x(ship: Ship, amount_to_move):
     next_position: pygame.Rect = __get_next_position(ship, 'x', amount_to_move)
     
-    if (next_position.x > 0) and (next_position.x + ship.HEIGHT < MainWindow.WIDTH) and not (next_position.colliderect(GameView.CENTER_LINE)):
+    if (next_position.x > 0) and (next_position.x + ship.WIDTH < MainWindow.WIDTH) and not (next_position.colliderect(GameView.CENTER_LINE)):
         ship.rect.x += amount_to_move
         logging.debug(f"{ship.color_text} ship moved {'Right' if amount_to_move > 0 else 'Left'}")
         return
@@ -37,7 +37,7 @@ def __move_x(ship: Ship, amount_to_move):
 def __move_y(ship: Ship, amount_to_move):
     next_position: pygame.Rect = __get_next_position(ship, 'y', amount_to_move)
     
-    if (next_position.y > 0) and (next_position.y + ship.WIDTH < MainWindow.HEIGHT):
+    if (next_position.y > 0) and (next_position.y + ship.HEIGHT < MainWindow.HEIGHT):
         ship.rect.y += amount_to_move
         logging.debug(f"{ship.color_text} ship moved {'Down' if amount_to_move > 0 else 'Up'}")
         return
@@ -49,10 +49,10 @@ def __get_next_position(ship: Ship, axis, amount_to_move) -> pygame.Rect:
     if axis == 'x':
         return pygame.Rect(ship.rect.x + amount_to_move, 
                             ship.rect.y, 
-                            ship.HEIGHT, 
-                            ship.WIDTH)
+                            ship.WIDTH, 
+                            ship.HEIGHT)
     elif axis == 'y':
         return pygame.Rect(ship.rect.x, 
                             ship.rect.y + amount_to_move, 
-                            ship.HEIGHT, 
-                            ship.WIDTH)
+                            ship.WIDTH, 
+                            ship.HEIGHT)

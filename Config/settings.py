@@ -6,11 +6,13 @@ from Config.isettings import ISettings
 class Settings(ISettings):
 
     def __init__(self) -> None:
-        self.__settings = self.__load_settings()
+        self.settings = self.__load_settings()
         
-        self.ship_health: int = self.__settings["ShipHealth"]
-        self.fps: int = self.__settings["FPS"]
-        self.font_path: str = self.__settings["FontPath"]
+        self.ship_health: int = self.settings["ShipHealth"]
+        self.fps: int = self.settings["FPS"]
+        self.font_path: str = self.settings["FontPath"]
+        self.shoot_sfx_path: str = self.settings["ShootSFXPath"]
+        self.explosion_sfx_path: str = self.settings["ExplosionSFXPath"]
         
         
     def __load_settings(self):

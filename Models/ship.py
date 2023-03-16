@@ -4,14 +4,15 @@ import pygame
 from dataclasses import dataclass, field
 from Models.bullet import Bullet
 from Models.spawn_side import SpawnSide
+from Config.isettings import ISettings
 
 
 @dataclass
 class Ship:
     
-    WIDTH = 50
-    HEIGHT = 40
-    SIZE = (WIDTH, HEIGHT)
+    HEIGHT = 50
+    WIDTH = 40
+    SIZE = (HEIGHT, WIDTH)
     MOVE_SPEED = 4
     MAX_BULLETS = 6
     

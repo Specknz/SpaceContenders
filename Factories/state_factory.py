@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from Config.isettings import ISettings
 from Models.state import State
 from Models.istate import IState
+from Services.audio_service import AudioService
 from Stores.istore import IStore
 from Factories.ifactory import IFactory
 from Factories.iship_factory import IShipFactory
@@ -26,15 +27,21 @@ class StateFactory(IFactory):
 
     def game(self) -> IState:
         self.ship_store.update(self.ship_factory.create_1v1_ships())
+        
         view = self.view_factory.game(self.ship_store.get_stored_item())
+        
         event_handler = self.event_handler_factory.game(self.ship_store.get_stored_item(), 
                                                         self.game_finish,
                                                         self.winning_ship_store.update)
+        
         return self.__create_state(view, event_handler)
 
     def game_finish(self) -> IState:
+        
         view = self.view_factory.game_finish(self.winning_ship_store.get_stored_item())
+        
         event_handler = self.event_handler_factory.game_finish(view, self.main_menu)
+        
         return self.__create_state(view, event_handler)
 
     def __create_state(self, view, event_handler) -> IState:

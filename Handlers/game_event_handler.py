@@ -5,6 +5,7 @@ from Models.ship import Ship
 from Models.bullet import Bullet
 from Models.istate import IState
 from dataclasses import dataclass, field
+from Services.audio_service import AudioService
 from Windows.main_window import MainWindow
 from Handlers.ievent_handler import IEventHandler
 from Handlers.event_handler_base import EventHandlerBase
@@ -15,6 +16,7 @@ import Services.ship_movement_service as ShipMovementService
 @dataclass
 class GameEventHandler(IEventHandler, EventHandlerBase):
     pyg: pygame
+    audio_service: AudioService
     ships: list[Ship] = field(default_factory=list)
     update_state_store_func: Callable[[IState], None] = field(default_factory = Callable)
     game_state_factory_func: Callable[[], IState] = field(default_factory = Callable)
@@ -45,7 +47,7 @@ class GameEventHandler(IEventHandler, EventHandlerBase):
     def __ship_shots(self, event_key) -> None:
         for ship in self.ships:
             if self.__shoot_key_pressed(event_key, ship):
-                ShipShootService.shoot(ship)
+                ShipShootService.shoot(ship, self.audio_service)
 
     def __shoot_key_pressed(self, key, ship: Ship) -> bool:
         return key == ship.control_scheme["SHOOT"]

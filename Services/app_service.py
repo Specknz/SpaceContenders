@@ -14,7 +14,7 @@ class AppService():
 
     def setup(self):
         self.state_store = StoreFactory.state()
-        self.state_factory = self.app_factory.state(self.pyg, self.state_store)
+        self.state_factory = self.app_factory.state(self.state_store)
         self.state_store.update(self.state_factory.main_menu())
 
     def run(self):

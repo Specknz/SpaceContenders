@@ -1,5 +1,7 @@
 {
     "FPS": 60,
     "ShipHealth": 5,
-    "FontPath": "Assets/Fonts/induction/Induction.otf"
+    "FontPath": "Assets/Fonts/induction/Induction.otf",
+    "ShootSFXPath": "Assets/Audio/Shoot.mp3",
+    "ExplosionSFXPath": "Assets/Audio/Explosion.mp3"
 }

@@ -4,6 +4,7 @@ from dataclasses import dataclass
 from typing import Callable
 from Models.ship import Ship
 from Models.istate import IState
+from Services.audio_service import AudioService
 from Stores.istore import IStore
 from Views.iview import IView
 from Factories.ifactory import IFactory
@@ -16,6 +17,7 @@ from Handlers.game_finish_event_handler import GameFinishEventHandler
 class EventHandlerFactory(IFactory):
     pyg: pygame
     state_store: IStore
+    audio_service: AudioService
 
     def main_menu(self, 
                   view: IView, 
@@ -30,6 +32,7 @@ class EventHandlerFactory(IFactory):
              game_finish_state_factory_func: Callable[[], IState],
              update_winning_ship_func: Callable[[Ship], None]):
         return GameEventHandler(self.pyg,
+                                self.audio_service,
                                 ships,
                                 self.state_store.update,
                                 game_finish_state_factory_func,
