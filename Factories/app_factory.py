@@ -24,8 +24,8 @@ class AppFactory:
         return StateFactory(self.pyg, 
                             self.clock, 
                             self.settings, 
-                            StoreFactory.ship(), 
-                            StoreFactory.winning_ship(),
+                            self.ship_store(), 
+                            self.winning_ship_store(),
                             self.ship_factory(),
                             self.view_factory(),
                             self.event_handler_factory(state_store))
@@ -40,3 +40,9 @@ class AppFactory:
         return EventHandlerFactory(self.pyg, 
                                    state_store, 
                                    self.audio_service)
+        
+    def ship_store(self) -> IStore:
+        return StoreFactory.ship()
+    
+    def winning_ship_store(self) -> IStore:
+        return StoreFactory.winning_ship()

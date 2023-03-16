@@ -10,10 +10,10 @@ from Models.istate import IState
 class AppService():
     pyg: pygame
     clock: pygame.time.Clock
-    app_factory: AppFactory
+    app_factory = AppFactory(pyg, clock)
+    state_store = StoreFactory.state()
 
     def setup(self):
-        self.state_store = StoreFactory.state()
         self.state_factory = self.app_factory.state_factory(self.state_store)
         self.state_store.update(self.state_factory.main_menu())
 

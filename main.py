@@ -10,8 +10,7 @@ def main():
     pyg = setup_pygame()
     clock = pyg.time.Clock()
     
-    app_factory = AppFactory(pyg, clock)
-    app_service = AppService(pyg, clock, app_factory)
+    app_service = AppService(pyg, clock)
     app_service.setup()
     app_service.run()
     
