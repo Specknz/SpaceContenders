@@ -3,7 +3,7 @@ import Factories.store_factory as StoreFactory
 import Factories.settings_factory as SettingsFactory
 import Factories.service_factory as ServiceFactory
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from Factories.event_handler_factory import EventHandlerFactory
 from Factories.ifactory import IFactory
 from Factories.iship_factory import IShipFactory
@@ -18,8 +18,9 @@ class AppFactory:
     pyg: pygame
     clock: pygame.time.Clock
     settings = SettingsFactory.settings()
+    audio_service = ServiceFactory.audio_service(pyg, settings)
     
-    def state(self, state_store: IStore) -> IFactory:
+    def state_factory(self, state_store: IStore) -> IFactory:
         return StateFactory(self.pyg, 
                             self.clock, 
                             self.settings, 
@@ -36,5 +37,6 @@ class AppFactory:
         return ViewFactory(self.pyg, self.settings)
     
     def event_handler_factory(self, state_store: IStore) -> IFactory:
-        return EventHandlerFactory(self.pyg, state_store, 
-                                   ServiceFactory.audio_service(self.pyg, self.settings))
+        return EventHandlerFactory(self.pyg, 
+                                   state_store, 
+                                   self.audio_service)

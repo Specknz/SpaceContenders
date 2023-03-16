@@ -23,13 +23,12 @@ class StateFactory(IFactory):
     def main_menu(self) -> IState:
         view = self.view_factory.main_menu()
         event_handler = self.event_handler_factory.main_menu(view, self.game)
+        
         return self.__create_state(view, event_handler)
 
     def game(self) -> IState:
         self.ship_store.update(self.ship_factory.create_1v1_ships())
-        
         view = self.view_factory.game(self.ship_store.get_stored_item())
-        
         event_handler = self.event_handler_factory.game(self.ship_store.get_stored_item(), 
                                                         self.game_finish,
                                                         self.winning_ship_store.update)
@@ -37,9 +36,7 @@ class StateFactory(IFactory):
         return self.__create_state(view, event_handler)
 
     def game_finish(self) -> IState:
-        
         view = self.view_factory.game_finish(self.winning_ship_store.get_stored_item())
-        
         event_handler = self.event_handler_factory.game_finish(view, self.main_menu)
         
         return self.__create_state(view, event_handler)
